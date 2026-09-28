@@ -1,0 +1,31 @@
+[
+  {
+    "id": "INQ-1001",
+    "date": "2026-09-28",
+    "type": "Sample Kit",
+    "name": "Chef Vikram Oberoi",
+    "company": "The Spice Pavilion Cloud Kitchens",
+    "phone": "+91 98111 22334",
+    "city": "Mumbai",
+    "items": [
+      "10-Inch 3-Compartment Plate",
+      "5-Compartment Heavy Thali",
+      "750ml Clamshell Box"
+    ],
+    "status": "Dispatched"
+  },
+  {
+    "id": "INQ-1002",
+    "date": "2026-09-28",
+    "type": "Wholesale RFQ",
+    "name": "Rahul Verma",
+    "company": "Grand Royal Caterers & Banquets",
+    "phone": "+91 98222 33445",
+    "city": "New Delhi",
+    "items": [
+      "9-Inch Round Dinner Plate",
+      "250ml Curry Bowl"
+    ],
+    "status": "Quote Sent"
+  }
+]

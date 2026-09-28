@@ -1,0 +1,55 @@
+{
+  "siteName": "Ecolates",
+  "siteTagline": "Pure Sugarcane Bagasse Tableware & Packaging",
+  "contact": {
+    "phone": "+91 98765 43210",
+    "whatsapp": "+91 98765 43210",
+    "email": "sales@ecolates.com",
+    "factoryAddress": "Industrial Growth Centre, Phase-II, Manufacturing Hub, India"
+  },
+  "seo": {
+    "home": {
+      "title": "Ecolates | Sustainable Sugarcane Bagasse Tableware & Food Packaging",
+      "description": "Leading manufacturer of 100% biodegradable and compostable sugarcane bagasse plates, bowls, food containers, and meal trays in India. Direct factory wholesale B2B supply.",
+      "keywords": "bagasse plates, sugarcane tableware manufacturer, biodegradable food containers, compostable bowls, wholesale tableware India",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "products": {
+      "title": "Commercial Product Catalog | Ecolates Bagasse Tableware",
+      "description": "Browse our full range of certified sugarcane bagasse plates, meal trays, hinged clamshell containers, and gravy bowls. Direct factory prices.",
+      "keywords": "bagasse product catalog, sugarcane packaging list, disposable food trays wholesale",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "quality": {
+      "title": "Lab Certifications & 6-Point Quality Assurance | Ecolates",
+      "description": "Review ISO 9001, BPI, and EN 13432 lab certifications. 120°C oil leak test, microwave shock, and PFAS-free test results.",
+      "keywords": "bagasse test reports, food safety certifications, BPI certified tableware",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "custom": {
+      "title": "Custom Brand Logo Debossing & OEM Tooling | Ecolates",
+      "description": "Deboss your restaurant or hotel brand logo directly into natural sugarcane bagasse plates and container lids. Rapid 21-day tooling.",
+      "keywords": "custom branded plates, logo embossed tableware, OEM bagasse manufacturer",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "contact": {
+      "title": "Wholesale Trade RFQ & Factory Inquiries | Ecolates",
+      "description": "Request factory wholesale price tiers or order a complimentary evaluation sample box delivered to your kitchen.",
+      "keywords": "wholesale bagasse quote, tableware distributor inquiry, sample kit request",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "about": {
+      "title": "About Us | India’s Premier Sugarcane Bagasse Tableware Manufacturer | Ecolates",
+      "description": "Learn about Ecolates leadership, high-capacity eco tableware manufacturing facilities, and our mission to replace single-use plastics.",
+      "keywords": "about ecolates, sugarcane tableware factory, bagasse manufacturers india",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    },
+    "certifications": {
+      "title": "Lab Certifications & Compliance Reports | Ecolates",
+      "description": "Download verified lab test reports for Ecolates tableware including ISO 22000:2018, PFAS-free test results, and leak reports.",
+      "keywords": "ecolates certifications, pfas free tableware, iso 22000 certificate",
+      "ogImage": "https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg"
+    }
+  },
+  "bannerAnnouncement": "🌱 100% Sugarcane Bagasse — Zero Trees Cut Down • Free B2B Evaluation Sample Kits Delivered Pan-India • MOQ 5,000 Units"
+}
