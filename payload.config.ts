@@ -1,5 +1,6 @@
 import { buildConfig } from 'payload';
 import { sqliteAdapter } from '@payloadcms/db-sqlite';
+import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,10 +16,13 @@ import { SiteSettings } from './src/collections/SiteSettings';
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
+const dbUri = process.env.POSTGRES_URL || process.env.DATABASE_URI || 'file:./ecolates.db';
+const isPostgres = dbUri.startsWith('postgres://') || dbUri.startsWith('postgresql://');
+
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
-  cors: ['http://localhost:3001', 'http://127.0.0.1:3001'],
-  csrf: ['http://localhost:3001', 'http://127.0.0.1:3001'],
+  cors: ['http://localhost:3001', 'http://127.0.0.1:3001', process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  csrf: ['http://localhost:3001', 'http://127.0.0.1:3001', process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
   admin: {
     user: Users.slug,
     meta: {
@@ -36,11 +40,17 @@ export default buildConfig({
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'ecolates_b2b_sugarcane_tableware_secret_key_2026_super_secure',
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./ecolates.db',
-    },
-  }),
+  db: isPostgres
+    ? postgresAdapter({
+        pool: {
+          connectionString: dbUri,
+        },
+      })
+    : sqliteAdapter({
+        client: {
+          url: dbUri,
+        },
+      }),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
