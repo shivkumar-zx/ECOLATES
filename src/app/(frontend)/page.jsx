@@ -287,7 +287,7 @@ export default function HomePage() {
           </svg>
         </div>
 
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: '40px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+        <div className="container hero-grid-responsive" style={{ position: 'relative', zIndex: 1 }}>
           
           <div>
             <div className="light-green-tag" style={{ marginBottom: '14px', background: '#2d6a4f', color: '#ffffff' }}>
@@ -338,7 +338,7 @@ export default function HomePage() {
 
       {/* SUGARCANE AGRO-WASTE TO TABLEWARE LIFECYCLE STRIP */}
       <div style={{ background: '#ffffff', borderBottom: '1.5px solid #ddecde', padding: '20px 0', boxShadow: '0 4px 16px rgba(45, 106, 79, 0.04)' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+        <div className="container metrics-strip-responsive">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#e8f7ee', border: '1px solid #b7e4c7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0 }}>
               🌾
@@ -894,6 +894,7 @@ export default function HomePage() {
           {bundleSlide === 3 ? (
             /* INTERACTIVE CUSTOM BUNDLE BUILDER (USER CAN BUILD FOR THEMSELVES) */
             <div 
+              className="sample-box-grid-responsive"
               style={{ 
                 background: 'rgba(255, 255, 255, 0.98)', 
                 border: '2.5px solid #52b788', 
@@ -901,11 +902,7 @@ export default function HomePage() {
                 padding: '36px', 
                 boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                 position: 'relative',
-                color: '#182a20',
-                display: 'grid',
-                gridTemplateColumns: '1.25fr 0.75fr',
-                gap: '36px',
-                alignItems: 'start'
+                color: '#182a20'
               }}
             >
               {/* Left Side: Interactive Configurator Steppers */}
@@ -1168,6 +1165,7 @@ export default function HomePage() {
               const b = starterBundles[bundleSlide] || starterBundles[0];
               return (
                 <div 
+                  className="bundle-showcase-grid-responsive"
                   style={{ 
                     background: 'rgba(255, 255, 255, 0.98)', 
                     border: '2px solid #52b788', 
@@ -1175,11 +1173,7 @@ export default function HomePage() {
                     padding: '36px', 
                     boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                     position: 'relative',
-                    color: '#182a20',
-                    display: 'grid',
-                    gridTemplateColumns: '1.15fr 0.85fr',
-                    gap: '36px',
-                    alignItems: 'center'
+                    color: '#182a20'
                   }}
                 >
                   {/* Left Side: Bundle Info & Checklist */}
@@ -1505,17 +1499,14 @@ export default function HomePage() {
             const ind = industries[industrySlide];
             return (
               <div
+                className="industry-grid-responsive"
                 style={{
                   background: '#ffffff',
                   border: '2px solid #52b788',
                   borderRadius: '24px',
                   padding: '34px',
                   boxShadow: '0 14px 34px rgba(45, 106, 79, 0.10)',
-                  marginBottom: '26px',
-                  display: 'grid',
-                  gridTemplateColumns: '1.2fr 1fr',
-                  gap: '32px',
-                  alignItems: 'center'
+                  marginBottom: '26px'
                 }}
               >
                 <div>
@@ -1615,13 +1606,7 @@ export default function HomePage() {
           })()}
 
           {/* 6 Industry Mini-Cards Slider Strip (Clickable to switch instantly, no cut off) */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(6, 1fr)', 
-            gap: '12px',
-            overflowX: 'auto',
-            paddingBottom: '8px'
-          }}>
+          <div className="industry-tabs-scrollable" style={{ paddingBottom: '8px' }}>
             {industries.map((ind, i) => {
               const isActive = industrySlide === i;
               return (
@@ -1742,7 +1727,7 @@ export default function HomePage() {
             </div>
 
             {/* 4 Stat Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '18px' }}>
+            <div className="grid-4-responsive">
               
               {/* Stat 1: Trees Saved */}
               <div style={{ background: 'linear-gradient(135deg, #f0fbf4 0%, #e8f7ee 100%)', border: '1.5px solid #b7e4c7', borderRadius: '18px', padding: '22px 18px', textAlign: 'center' }}>
@@ -1823,7 +1808,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '18px' }}>
+            <div className="grid-4-responsive">
               
               <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', padding: '24px 20px', position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
@@ -1889,15 +1874,11 @@ export default function HomePage() {
           </div>
 
           {/* Side-by-Side Comparison & Official Graphic Banner */}
-          <div style={{
+          <div className="compare-grid-responsive" style={{
             background: '#ffffff',
             border: '1.5px solid #ddecde',
             borderRadius: '24px',
             padding: '36px',
-            display: 'grid',
-            gridTemplateColumns: '1.15fr 0.85fr',
-            gap: '36px',
-            alignItems: 'center',
             boxShadow: '0 8px 24px rgba(45, 106, 79, 0.05)'
           }}>
             <div>
@@ -2023,7 +2004,7 @@ export default function HomePage() {
           </div>
 
           {/* Interactive Inspection Stage & Spec Details */}
-          <div style={{ marginTop: '20px', background: '#ffffff', border: '1.5px solid #b7e4c7', borderRadius: '24px', padding: '36px', display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: '36px', alignItems: 'center', boxShadow: '0 8px 30px rgba(45, 106, 79, 0.08)' }}>
+          <div className="cam-studio-grid-responsive" style={{ marginTop: '20px', background: '#ffffff', border: '1.5px solid #b7e4c7', borderRadius: '24px', padding: '36px', boxShadow: '0 8px 30px rgba(45, 106, 79, 0.08)' }}>
             
             {/* Virtual Stage with Real Product Photography */}
             <div style={{ background: camAngle === 'thermal' ? 'radial-gradient(circle, #fef2f2 0%, #fee2e2 100%)' : 'radial-gradient(circle, #f0fbf4 0%, #e2f4e8 100%)', border: '1.5px solid #b7e4c7', borderRadius: '20px', padding: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '380px', position: 'relative', overflow: 'hidden', transition: 'background 0.3s ease' }}>
@@ -2154,7 +2135,7 @@ export default function HomePage() {
             <p className="section-desc">Every production batch of Ecolates tableware is rigorously tested against extreme kitchen conditions before dispatch.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginTop: '36px' }}>
+          <div className="grid-3-responsive" style={{ marginTop: '36px' }}>
             
             <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '18px', padding: '24px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
@@ -2239,7 +2220,7 @@ export default function HomePage() {
               </div>
             ) : (
               <form onSubmit={handleRfqSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="rfq-form-row-responsive">
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, marginBottom: '6px', color: '#182a20' }}>Full Name *</label>
                     <input 
@@ -2264,7 +2245,7 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div className="rfq-form-row-responsive">
                   <div>
                     <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, marginBottom: '6px', color: '#182a20' }}>WhatsApp Mobile Number *</label>
                     <input 

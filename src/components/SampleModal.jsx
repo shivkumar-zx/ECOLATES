@@ -193,7 +193,7 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
             </button>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 1fr', overflow: 'hidden', flexGrow: 1 }}>
+          <div className="sample-modal-layout-responsive">
             
             {/* Left Column: Product Selection Grid (Clean Vertical Flow - Zero Horizontal Slide) */}
             <div style={{ padding: '24px 28px', overflowY: 'auto', overflowX: 'hidden', borderRight: '1.5px solid #ddecde', background: '#fafdfa', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box' }}>

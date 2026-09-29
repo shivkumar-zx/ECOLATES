@@ -56,7 +56,7 @@ export default function AboutPage() {
         </div>
 
         {/* 4 Core Pillars */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '56px' }}>
+        <div className="grid-4-responsive" style={{ marginBottom: '56px' }}>
           <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '18px', padding: '24px', boxShadow: '0 4px 16px rgba(45, 106, 79, 0.05)' }}>
             <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#e8f7ee', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', marginBottom: '14px' }}>
               🌱
@@ -99,7 +99,7 @@ export default function AboutPage() {
         </div>
 
         {/* Manufacturing & Plant Capabilities */}
-        <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '24px', padding: '40px', marginBottom: '56px', display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '40px', alignItems: 'center' }}>
+        <div className="compare-grid-responsive" style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '24px', padding: '40px', marginBottom: '56px' }}>
           <div>
             <span className="light-green-tag">Advanced Manufacturing Hub</span>
             <h2 style={{ fontSize: '2.1rem', color: '#1b4332', margin: '8px 0 16px' }}>
@@ -140,7 +140,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          <div className="grid-4-responsive">
             {leadership.map((leader, idx) => (
               <div key={idx} style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 16px rgba(45, 106, 79, 0.05)', textAlign: 'center' }}>
                 <div style={{ height: '240px', background: '#f7faf8', overflow: 'hidden' }}>

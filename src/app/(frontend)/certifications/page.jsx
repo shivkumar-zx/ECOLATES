@@ -66,7 +66,7 @@ export default function CertificationsPage() {
         </div>
 
         {/* 4 Big Certificate Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px', marginBottom: '60px' }}>
+        <div className="grid-2-responsive" style={{ marginBottom: '60px' }}>
           {certs.map((c, idx) => (
             <div 
               key={idx} 

@@ -92,7 +92,7 @@ export default function ProductDetailClient({ product, related }) {
         </div>
 
         {/* 2-Column Product Showcase Section */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 1.25fr', gap: '44px', alignItems: 'flex-start', background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '24px', padding: '36px', boxShadow: '0 10px 36px rgba(45, 106, 79, 0.06)', marginBottom: '40px' }}>
+        <div className="product-detail-hero-responsive" style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '24px', padding: '36px', boxShadow: '0 10px 36px rgba(45, 106, 79, 0.06)', marginBottom: '40px' }}>
           
           {/* Left Column: Image Gallery & Quality Badges */}
           <div>
@@ -550,7 +550,7 @@ export default function ProductDetailClient({ product, related }) {
             HERO STORY BANNER (From WordPress Template Section)
             ======================================================== */}
         {product.templateHero && (
-          <div style={{ background: '#f0fbf4', border: '1.5px solid #b7e4c7', borderRadius: '24px', padding: '36px', marginBottom: '40px', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '32px', alignItems: 'center' }}>
+          <div className="industry-grid-responsive" style={{ background: '#f0fbf4', border: '1.5px solid #b7e4c7', borderRadius: '24px', padding: '36px', marginBottom: '40px' }}>
             <div>
               <span className="light-green-tag">Factory Innovation</span>
               <h2 style={{ fontSize: '1.8rem', color: '#1b4332', margin: '8px 0 14px', lineHeight: '1.3' }}>
@@ -892,7 +892,7 @@ export default function ProductDetailClient({ product, related }) {
                 </p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+              <div className="grid-2-responsive">
                 <div style={{ background: '#f0fbf4', border: '1.5px solid #b7e4c7', borderRadius: '16px', padding: '24px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                     <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>

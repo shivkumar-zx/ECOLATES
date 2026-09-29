@@ -360,7 +360,7 @@ export default function CartModal({
                 </p>
 
                 <form onSubmit={handleSubmitCartRfq} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div className="rfq-form-row-responsive" style={{ gap: '10px' }}>
                     <input 
                       type="text" 
                       required
@@ -379,7 +379,7 @@ export default function CartModal({
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div className="rfq-form-row-responsive" style={{ gap: '10px' }}>
                     <input 
                       type="text" 
                       placeholder="Company / Restaurant / Chain Name"
