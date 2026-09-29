@@ -75,7 +75,12 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
   };
 
   const filteredProducts = allProducts.filter(p => {
-    const matchesSearch = p.title.toLowerCase().includes(sampleSearch.toLowerCase()) || p.category.toLowerCase().includes(sampleSearch.toLowerCase());
+    const s = (sampleSearch || '').toLowerCase().trim();
+    const matchesSearch = !s ||
+      (p.title || '').toLowerCase().includes(s) ||
+      (p.category || '').toLowerCase().includes(s) ||
+      (p.sku || '').toLowerCase().includes(s) ||
+      ((p.overview || '') + ' ' + (p.shortDescription || '')).toLowerCase().includes(s);
     const matchesCat = filterCategory === 'all' || p.categorySlug === filterCategory;
     return matchesSearch && matchesCat;
   });

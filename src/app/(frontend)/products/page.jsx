@@ -23,12 +23,16 @@ function ProductsCatalogContent() {
 
   const filtered = productsData.filter(p => {
     const matchesCat = category === 'all' || p.categorySlug === category;
-    const qLower = query.toLowerCase();
-    const matchesQ = !query || 
-      p.title.toLowerCase().includes(qLower) || 
-      p.description.toLowerCase().includes(qLower) ||
-      p.category.toLowerCase().includes(qLower);
-    return matchesCat && matchesQ;
+    if (!query || !query.trim()) return matchesCat;
+
+    const qLower = query.toLowerCase().trim();
+    const titleMatch = (p.title || '').toLowerCase().includes(qLower);
+    const catMatch = (p.category || '').toLowerCase().includes(qLower);
+    const skuMatch = (p.sku || '').toLowerCase().includes(qLower);
+    const descMatch = ((p.overview || '') + ' ' + (p.shortDescription || '') + ' ' + (p.description || '')).toLowerCase().includes(qLower);
+    const specsMatch = p.parsedSpecs ? JSON.stringify(p.parsedSpecs).toLowerCase().includes(qLower) : false;
+
+    return matchesCat && (titleMatch || catMatch || skuMatch || descMatch || specsMatch);
   });
 
   return (

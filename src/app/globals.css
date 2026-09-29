@@ -822,7 +822,17 @@ h1, h2, h3, h4, h5 {
 @media (max-width: 860px) {
   .product-grid { grid-template-columns: repeat(2, 1fr); }
   .header-nav-tier { display: none; }
-  .header-search-wrapper { display: none; }
+  .header-primary-layout {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-search-wrapper {
+    display: block;
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 6px;
+  }
   .floating-dock-left { left: 8px; }
   .floating-dock-right { right: 8px; }
   .float-dock-btn { width: 42px; height: 42px; min-width: 42px; max-width: 42px; }
