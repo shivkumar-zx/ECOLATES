@@ -38,6 +38,7 @@ export default function Footer() {
           <h4>Company & Compliance</h4>
           <ul>
             <li><a href="/about">About Ecolates Factory</a></li>
+            <li><a href="/#planetSavings">Planet & Plant Savings 🌍</a></li>
             <li><a href="/certifications">Lab Test Certifications 📜</a></li>
             <li><a href="/#bulkEnquiry">Instant Wholesale RFQ</a></li>
             <li><a href="/#productChecks">6-Point Lab Quality Check</a></li>

@@ -341,6 +341,7 @@ export default function Header({
               <li><a href="/products?category=trays" className="nav-item-link">Meal Trays</a></li>
               <li><a href="/products?category=containers" className="nav-item-link">Clamshells</a></li>
               <li><a href="/products?category=bowls" className="nav-item-link">Bowls</a></li>
+              <li><a href="/#planetSavings" className="nav-item-link">Planet Savings</a></li>
               <li><a href="/about" className="nav-item-link">About Us</a></li>
               <li><a href="/certifications" className="nav-item-link">Certifications</a></li>
               <li><a href="/#bulkEnquiry" className="nav-item-link">Factory RFQ</a></li>

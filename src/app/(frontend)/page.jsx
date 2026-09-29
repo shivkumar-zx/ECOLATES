@@ -5,7 +5,7 @@ import productsData from '@/data/products.json';
 import { SampleContext } from '@/components/ClientLayoutShell';
 
 export default function HomePage() {
-  const { addSample } = useContext(SampleContext);
+  const { addSample, openModal } = useContext(SampleContext);
   const [activeCategory, setActiveCategory] = useState('all');
   const [camAngle, setCamAngle] = useState('top');
   const [camProductId, setCamProductId] = useState(1679); // Default 6oz Soup Bowl
@@ -13,6 +13,7 @@ export default function HomePage() {
   const [bundleSlide, setBundleSlide] = useState(0);
   const [bestSellerSlide, setBestSellerSlide] = useState(0);
   const [industrySlide, setIndustrySlide] = useState(0);
+  const [impactVolume, setImpactVolume] = useState(50000);
   const [customBundle, setCustomBundle] = useState({
     plates: 500,
     bowls: 500,
@@ -531,8 +532,6 @@ export default function HomePage() {
                       background: bestSellerSlide === 0 ? '#e2ece5' : '#ffffff',
                       color: bestSellerSlide === 0 ? '#9cb5a5' : '#1b4332',
                       border: '1.5px solid #b7e4c7',
-                      fontSize: '1.15rem',
-                      fontWeight: 'bold',
                       cursor: bestSellerSlide === 0 ? 'not-allowed' : 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -541,8 +540,11 @@ export default function HomePage() {
                       transition: 'all 0.2s'
                     }}
                     title="Previous Slide"
+                    aria-label="Previous Slide"
                   >
-                    ←
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
                   </button>
                   <button
                     type="button"
@@ -555,8 +557,6 @@ export default function HomePage() {
                       background: bestSellerSlide >= bestSellers.length - 4 ? '#e2ece5' : '#2d6a4f',
                       color: bestSellerSlide >= bestSellers.length - 4 ? '#9cb5a5' : '#ffffff',
                       border: '1.5px solid #2d6a4f',
-                      fontSize: '1.15rem',
-                      fontWeight: 'bold',
                       cursor: bestSellerSlide >= bestSellers.length - 4 ? 'not-allowed' : 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -565,8 +565,11 @@ export default function HomePage() {
                       transition: 'all 0.2s'
                     }}
                     title="Next Slide"
+                    aria-label="Next Slide"
                   >
-                    →
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
                   </button>
                 </div>
               )}
@@ -858,17 +861,19 @@ export default function HomePage() {
                   background: '#ffffff',
                   border: 'none',
                   color: '#1b4332',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
                 }}
                 title="Previous Bundle"
+                aria-label="Previous Bundle"
               >
-                ←
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
               </button>
               <button
                 type="button"
@@ -880,17 +885,19 @@ export default function HomePage() {
                   background: '#52b788',
                   border: 'none',
                   color: '#0d2818',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
                 }}
                 title="Next Bundle"
+                aria-label="Next Bundle"
               >
-                →
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </button>
             </div>
           </div>
@@ -1461,19 +1468,21 @@ export default function HomePage() {
                   height: '38px',
                   borderRadius: '50%',
                   background: '#ffffff',
-                  border: '1px solid #b7e4c7',
+                  border: '1.5px solid #b7e4c7',
                   color: '#1b4332',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 8px rgba(45, 106, 79, 0.1)',
+                  boxShadow: '0 2px 8px rgba(45, 106, 79, 0.12)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
                 }}
                 title="Previous Industry"
+                aria-label="Previous Industry"
               >
-                ←
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
               </button>
               <button
                 type="button"
@@ -1485,17 +1494,19 @@ export default function HomePage() {
                   background: '#2d6a4f',
                   border: 'none',
                   color: '#ffffff',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px rgba(45, 106, 79, 0.2)',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  transition: 'all 0.2s'
                 }}
                 title="Next Industry"
+                aria-label="Next Industry"
               >
-                →
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
               </button>
             </div>
           </div>
@@ -1655,7 +1666,333 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. 360° INTERACTIVE PRODUCT CAMERA STUDIO (#camStudio) */}
+      {/* 6. ENVIRONMENTAL IMPACT & PLANET SAVINGS SECTION (#planetSavings) */}
+      <section className="section-container" id="planetSavings" style={{ background: '#f4fbf6', borderTop: '1px solid #ddecde', borderBottom: '1px solid #ddecde', padding: '64px 0 74px' }}>
+        <div className="container">
+          
+          {/* Header */}
+          <div className="text-center" style={{ marginBottom: '40px' }}>
+            <span className="light-green-tag" style={{ background: '#e8f7ee', color: '#15803d', border: '1px solid #b7e4c7', padding: '6px 14px', borderRadius: '100px', fontSize: '0.8rem', fontWeight: 800 }}>
+              🌍 Agro-Waste Circular Economy & Planet Protection
+            </span>
+            <h2 className="main-section-title" style={{ fontSize: '2.4rem', color: '#1b4332', margin: '14px 0 10px', fontWeight: 900 }}>
+              How Choosing Ecolates Protects Our Planet & Saves Trees
+            </h2>
+            <p className="section-desc" style={{ maxWidth: '820px', margin: '0 auto', color: '#486153', fontSize: '1.05rem', lineHeight: '1.6' }}>
+              Every single Ecolates plate, bowl, and tray is manufactured from <strong>100% renewable sugarcane bagasse</strong> — the fibrous agricultural plant residue left after sugar extraction. By switching away from virgin paper and petrochemical plastics, your business directly stops deforestation and eliminates tons of landfill waste.
+            </p>
+          </div>
+
+          {/* Interactive Planet Savings Calculator */}
+          <div style={{
+            background: '#ffffff',
+            border: '2px solid #b7e4c7',
+            borderRadius: '26px',
+            padding: '36px 32px',
+            boxShadow: '0 16px 40px rgba(45, 106, 79, 0.08)',
+            marginBottom: '46px'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
+              <div>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#15803d', letterSpacing: '0.08em' }}>
+                  Interactive ESG Impact Estimator
+                </span>
+                <h3 style={{ fontSize: '1.45rem', color: '#1b4332', margin: '4px 0 0', fontWeight: 800 }}>
+                  Calculate Your Environmental Savings by Switching to Bagasse
+                </h3>
+              </div>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.82rem', color: '#486153', fontWeight: 700 }}>Quick Presets:</span>
+                {[10000, 25000, 50000, 100000, 250000, 500000].map(vol => (
+                  <button
+                    key={vol}
+                    type="button"
+                    onClick={() => setImpactVolume(vol)}
+                    style={{
+                      padding: '6px 12px',
+                      borderRadius: '8px',
+                      border: impactVolume === vol ? '1.5px solid #2d6a4f' : '1px solid #ddecde',
+                      background: impactVolume === vol ? '#2d6a4f' : '#f7faf8',
+                      color: impactVolume === vol ? '#ffffff' : '#1b4332',
+                      fontSize: '0.78rem',
+                      fontWeight: impactVolume === vol ? 800 : 600,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s'
+                    }}
+                  >
+                    {vol >= 1000 ? `${vol / 1000}k` : vol} pcs
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Slider Control Bar */}
+            <div style={{ background: '#f7faf8', border: '1px solid #ddecde', borderRadius: '16px', padding: '18px 22px', marginBottom: '32px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <span style={{ fontSize: '0.86rem', color: '#1b4332', fontWeight: 700 }}>
+                  Annual Tableware Order Quantity:
+                </span>
+                <span style={{ fontSize: '1.25rem', color: '#1b4332', fontWeight: 900, background: '#e8f7ee', padding: '4px 14px', borderRadius: '8px', border: '1px solid #b7e4c7' }}>
+                  {impactVolume.toLocaleString('en-IN')} Units / Year
+                </span>
+              </div>
+              <input
+                type="range"
+                min="5000"
+                max="500000"
+                step="5000"
+                value={impactVolume}
+                onChange={e => setImpactVolume(Number(e.target.value))}
+                style={{ width: '100%', accentColor: '#2d6a4f', cursor: 'pointer', height: '6px' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: '#7a9485', marginTop: '6px' }}>
+                <span>5,000 pcs (Local Bistro / Cafe)</span>
+                <span>50,000 pcs (Catering / Cloud Kitchen)</span>
+                <span>500,000 pcs (Hospitality Chain / Pan-India)</span>
+              </div>
+            </div>
+
+            {/* 4 Stat Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '18px' }}>
+              
+              {/* Stat 1: Trees Saved */}
+              <div style={{ background: 'linear-gradient(135deg, #f0fbf4 0%, #e8f7ee 100%)', border: '1.5px solid #b7e4c7', borderRadius: '18px', padding: '22px 18px', textAlign: 'center' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#ffffff', border: '1px solid #b7e4c7', margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
+                  🌲
+                </div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#1b4332', lineHeight: '1.1', marginBottom: '4px' }}>
+                  {Math.max(1, Math.round(impactVolume / 1500)).toLocaleString('en-IN')} Trees
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#15803d', marginBottom: '6px' }}>
+                  Saved From Clear-Cutting
+                </div>
+                <p style={{ fontSize: '0.76rem', color: '#486153', lineHeight: '1.45', margin: 0 }}>
+                  Virgin paper plates destroy forest timber. Sugarcane bagasse uses 100% upcycled agro-residue stalks with <strong>0 trees cut</strong>.
+                </p>
+              </div>
+
+              {/* Stat 2: Plastic Diverted */}
+              <div style={{ background: 'linear-gradient(135deg, #f0fbf4 0%, #e8f7ee 100%)', border: '1.5px solid #b7e4c7', borderRadius: '18px', padding: '22px 18px', textAlign: 'center' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#ffffff', border: '1px solid #b7e4c7', margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
+                  🚯
+                </div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#1b4332', lineHeight: '1.1', marginBottom: '4px' }}>
+                  {Math.round(impactVolume * 0.022).toLocaleString('en-IN')} kg
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#15803d', marginBottom: '6px' }}>
+                  Plastic & Foam Diverted
+                </div>
+                <p style={{ fontSize: '0.76rem', color: '#486153', lineHeight: '1.45', margin: 0 }}>
+                  Prevents non-degradable thermocol and toxic plastic polymer liners from choking marine habitats and overflowing urban landfills.
+                </p>
+              </div>
+
+              {/* Stat 3: CO2 Emissions Reduced */}
+              <div style={{ background: 'linear-gradient(135deg, #f0fbf4 0%, #e8f7ee 100%)', border: '1.5px solid #b7e4c7', borderRadius: '18px', padding: '22px 18px', textAlign: 'center' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#ffffff', border: '1px solid #b7e4c7', margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
+                  ☁️
+                </div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#1b4332', lineHeight: '1.1', marginBottom: '4px' }}>
+                  {Math.round(impactVolume * 0.048).toLocaleString('en-IN')} kg
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#15803d', marginBottom: '6px' }}>
+                  CO₂e Emissions Prevented
+                </div>
+                <p style={{ fontSize: '0.76rem', color: '#486153', lineHeight: '1.45', margin: 0 }}>
+                  Bagasse tableware has a <strong>72% lower carbon footprint</strong> than petrochemical plastics, cutting your company's Scope-3 emissions.
+                </p>
+              </div>
+
+              {/* Stat 4: Organic Plant Soil Generated */}
+              <div style={{ background: 'linear-gradient(135deg, #f0fbf4 0%, #e8f7ee 100%)', border: '1.5px solid #b7e4c7', borderRadius: '18px', padding: '22px 18px', textAlign: 'center' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#ffffff', border: '1px solid #b7e4c7', margin: '0 auto 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
+                  🌱
+                </div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#1b4332', lineHeight: '1.1', marginBottom: '4px' }}>
+                  {Math.round(impactVolume * 0.02).toLocaleString('en-IN')} kg
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#15803d', marginBottom: '6px' }}>
+                  Soil Compost Created
+                </div>
+                <p style={{ fontSize: '0.76rem', color: '#486153', lineHeight: '1.45', margin: 0 }}>
+                  Naturally decomposes within <strong>60 to 90 days</strong>, returning mineral-rich plant nutrients back to the soil for the next crop cycle.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          {/* 4-Stage Closed-Loop Plant Cycle */}
+          <div style={{ marginBottom: '46px' }}>
+            <div className="text-center" style={{ marginBottom: '26px' }}>
+              <span className="light-green-tag">100% Circular Agricultural Flow</span>
+              <h3 style={{ fontSize: '1.75rem', color: '#1b4332', margin: '6px 0 6px', fontWeight: 800 }}>
+                The Closed-Loop Plant Journey: From Sugarcane Farm to Compost
+              </h3>
+              <p style={{ color: '#486153', fontSize: '0.92rem', maxWidth: '640px', margin: '0 auto' }}>
+                How Ecolates transforms agricultural crop byproducts into food-grade commercial tableware without harming nature.
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '18px' }}>
+              
+              <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', padding: '24px 20px', position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#e8f7ee', color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', fontWeight: 900 }}>
+                    1
+                  </div>
+                  <span style={{ fontSize: '0.7rem', color: '#15803d', fontWeight: 800, background: '#e8f7ee', padding: '3px 8px', borderRadius: '6px' }}>Agro-Waste</span>
+                </div>
+                <h4 style={{ fontSize: '1.05rem', color: '#1b4332', marginBottom: '8px', fontWeight: 800 }}>
+                  🌾 Sugarcane Juice Extraction
+                </h4>
+                <p style={{ fontSize: '0.8rem', color: '#486153', lineHeight: '1.55', margin: 0 }}>
+                  Farmers harvest sugarcane for sugar & juice. The discarded dry fibrous residue (bagasse) is gathered rather than burned in open fields, preventing toxic smoke and seasonal smog.
+                </p>
+              </div>
+
+              <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', padding: '24px 20px', position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#e8f7ee', color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', fontWeight: 900 }}>
+                    2
+                  </div>
+                  <span style={{ fontSize: '0.7rem', color: '#15803d', fontWeight: 800, background: '#e8f7ee', padding: '3px 8px', borderRadius: '6px' }}>Zero Trees</span>
+                </div>
+                <h4 style={{ fontSize: '1.05rem', color: '#1b4332', marginBottom: '8px', fontWeight: 800 }}>
+                  ⚙️ 300-Ton Hydraulic Tooling
+                </h4>
+                <p style={{ fontSize: '0.8rem', color: '#486153', lineHeight: '1.55', margin: 0 }}>
+                  Agro-fibers are pulped with pure water, steam-sterilized, and pressed at 160°C under 300 tons of pressure. Zero wood trees are cut, 0% chlorine bleach, and 100% PFAS-free.
+                </p>
+              </div>
+
+              <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', padding: '24px 20px', position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#e8f7ee', color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', fontWeight: 900 }}>
+                    3
+                  </div>
+                  <span style={{ fontSize: '0.7rem', color: '#15803d', fontWeight: 800, background: '#e8f7ee', padding: '3px 8px', borderRadius: '6px' }}>Commercial Dine</span>
+                </div>
+                <h4 style={{ fontSize: '1.05rem', color: '#1b4332', marginBottom: '8px', fontWeight: 800 }}>
+                  🍽️ Heavy Commercial Meal Service
+                </h4>
+                <p style={{ fontSize: '0.8rem', color: '#486153', lineHeight: '1.55', margin: 0 }}>
+                  Unrivaled structural firmness holding heavy Indian curries, hot gravies, and soups. Microwave safe up to 120°C and freezer proof down to -20°C without getting soggy.
+                </p>
+              </div>
+
+              <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '20px', padding: '24px 20px', position: 'relative' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#e8f7ee', color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', fontWeight: 900 }}>
+                    4
+                  </div>
+                  <span style={{ fontSize: '0.7rem', color: '#15803d', fontWeight: 800, background: '#e8f7ee', padding: '3px 8px', borderRadius: '6px' }}>60-90 Days</span>
+                </div>
+                <h4 style={{ fontSize: '1.05rem', color: '#1b4332', marginBottom: '8px', fontWeight: 800 }}>
+                  🪴 Decomposes into Soil Nutrient
+                </h4>
+                <p style={{ fontSize: '0.8rem', color: '#486153', lineHeight: '1.55', margin: 0 }}>
+                  After dining disposal, the tableware decomposes naturally in backyard or municipal compost piles into rich organic humus in 60-90 days, fertilizing new plant and crop growth.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Side-by-Side Comparison & Official Graphic Banner */}
+          <div style={{
+            background: '#ffffff',
+            border: '1.5px solid #ddecde',
+            borderRadius: '24px',
+            padding: '36px',
+            display: 'grid',
+            gridTemplateColumns: '1.15fr 0.85fr',
+            gap: '36px',
+            alignItems: 'center',
+            boxShadow: '0 8px 24px rgba(45, 106, 79, 0.05)'
+          }}>
+            <div>
+              <span className="light-green-tag">Direct Environmental Comparison</span>
+              <h3 style={{ fontSize: '1.65rem', color: '#1b4332', margin: '8px 0 16px', fontWeight: 800 }}>
+                Sugarcane Bagasse vs Plastic & Paper
+              </h3>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', padding: '10px 14px', background: '#f7faf8', borderRadius: '10px', fontSize: '0.78rem', fontWeight: 800, color: '#1b4332' }}>
+                  <span>Metric</span>
+                  <span style={{ color: '#15803d' }}>Ecolates Bagasse</span>
+                  <span style={{ color: '#b91c1c' }}>Plastic / Thermocol</span>
+                </div>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', padding: '10px 14px', borderBottom: '1px solid #edf2ee', fontSize: '0.82rem' }}>
+                  <strong style={{ color: '#1b4332' }}>Forest Trees Cut Down</strong>
+                  <span style={{ color: '#15803d', fontWeight: 700 }}>✓ Zero (100% Agro-Residue)</span>
+                  <span style={{ color: '#dc2626' }}>Paper uses virgin forest timber</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', padding: '10px 14px', borderBottom: '1px solid #edf2ee', fontSize: '0.82rem' }}>
+                  <strong style={{ color: '#1b4332' }}>Decomposition Speed</strong>
+                  <span style={{ color: '#15803d', fontWeight: 700 }}>✓ 60 to 90 Days in Soil</span>
+                  <span style={{ color: '#dc2626' }}>450 - 1,000+ Years in Landfill</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', padding: '10px 14px', borderBottom: '1px solid #edf2ee', fontSize: '0.82rem' }}>
+                  <strong style={{ color: '#1b4332' }}>Microplastics & Toxins</strong>
+                  <span style={{ color: '#15803d', fontWeight: 700 }}>✓ 0% Toxic Leaching</span>
+                  <span style={{ color: '#dc2626' }}>High microplastic contamination</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr 1fr', padding: '10px 14px', fontSize: '0.82rem' }}>
+                  <strong style={{ color: '#1b4332' }}>Microwave Safe (120°C)</strong>
+                  <span style={{ color: '#15803d', fontWeight: 700 }}>✓ Safe & Leak-Resistant</span>
+                  <span style={{ color: '#dc2626' }}>Melts & releases dioxins</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '14px', marginTop: '26px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => openModal()}
+                  className="btn btn-primary-green"
+                  style={{ padding: '11px 22px', fontSize: '0.9rem', fontWeight: 800 }}
+                >
+                  📦 Order Free Evaluation Sample Box
+                </button>
+                <a
+                  href="#bulkEnquiry"
+                  className="btn btn-light-green-outline"
+                  style={{ padding: '11px 20px', fontSize: '0.9rem', fontWeight: 700, background: '#ffffff' }}
+                >
+                  ⚡ Get Factory RFQ for Your Volume
+                </a>
+              </div>
+            </div>
+
+            <div style={{ textAlign: 'center', background: '#f7faf8', borderRadius: '18px', padding: '24px', border: '1px solid #b7e4c7' }}>
+              <img
+                src="https://www.ecolates.com/wp-content/uploads/2022/12/planet-help-1024x535.png"
+                alt="How Ecolates Tableware Protects the Planet"
+                style={{ width: '100%', maxHeight: '240px', objectFit: 'contain', marginBottom: '14px' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '0.72rem', background: '#e8f7ee', color: '#15803d', padding: '4px 10px', borderRadius: '6px', fontWeight: 700, border: '1px solid #b7e4c7' }}>
+                  🌱 100% Home Compostable
+                </span>
+                <span style={{ fontSize: '0.72rem', background: '#e8f7ee', color: '#15803d', padding: '4px 10px', borderRadius: '6px', fontWeight: 700, border: '1px solid #b7e4c7' }}>
+                  🌲 Zero Trees Cut Down
+                </span>
+                <span style={{ fontSize: '0.72rem', background: '#e8f7ee', color: '#15803d', padding: '4px 10px', borderRadius: '6px', fontWeight: 700, border: '1px solid #b7e4c7' }}>
+                  🛡️ Certified PFAS Free
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* 7. 360° INTERACTIVE PRODUCT CAMERA STUDIO (#camStudio) */}
       <section className="section-container bg-white" id="camStudio">
         <div className="container">
           
