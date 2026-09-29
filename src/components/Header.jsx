@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 export default function Header({ 
   sampleCount = 0, 
   onOpenSampleModal, 
+  cartCount = 0,
+  onOpenCartModal = () => {},
   user = null, 
   onOpenAuthModal = () => {}, 
   onSignOut = () => {} 
@@ -136,6 +138,24 @@ export default function Header({
                   <span>Sign In</span>
                 </button>
               )}
+
+              {/* Commercial Wholesale Cart Trigger */}
+              <button 
+                type="button" 
+                onClick={onOpenCartModal} 
+                className="sample-cart-trigger" 
+                style={{ background: '#f0fbf4', borderColor: '#b7e4c7' }}
+                title="Open Commercial Wholesale Cart"
+              >
+                <div className="sample-icon-wrapper" style={{ background: '#2d6a4f', color: '#ffffff' }}>
+                  <span style={{ fontSize: '1.05rem' }}>🛒</span>
+                  <span className="sample-badge-count" style={{ background: '#16a34a' }}>{cartCount}</span>
+                </div>
+                <div className="sample-btn-text">
+                  <span className="free-text" style={{ color: '#2d6a4f' }}>WHOLESALE CART</span>
+                  <span className="eval-text">{cartCount} {cartCount === 1 ? 'Product' : 'Products'} Selected</span>
+                </div>
+              </button>
 
               <button type="button" onClick={onOpenSampleModal} className="sample-cart-trigger" title="Open Free Evaluation Sample Box">
                 <div className="sample-icon-wrapper">

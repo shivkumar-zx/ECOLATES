@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState, useContext } from 'react';
-import { SampleContext } from '@/components/ClientLayoutShell';
+import { SampleContext, CartContext } from '@/components/ClientLayoutShell';
 
 export default function ProductDetailClient({ product, related }) {
   const { addSample } = useContext(SampleContext);
+  const { addToCart } = useContext(CartContext);
   const [selectedImg, setSelectedImg] = useState(product.featuredImage);
   const [activeTab, setActiveTab] = useState('visuals');
   const [selectedVolume, setSelectedVolume] = useState(5000);
   const [rfqSubmitted, setRfqSubmitted] = useState(false);
+  const [isRfqModalOpen, setIsRfqModalOpen] = useState(false);
   const [rfqForm, setRfqForm] = useState({
     name: '',
     phone: '',
@@ -274,102 +276,271 @@ export default function ProductDetailClient({ product, related }) {
                 </div>
               </div>
 
-              {/* Dual Action Buttons */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: '12px' }}>
-                <a 
-                  href="#proformaRfq"
-                  className="btn btn-primary-green btn-lg"
-                  style={{ width: '100%', justifyContent: 'center' }}
+              {/* Compact 3-Action Button Bar: Add to Cart, Instant RFQ, Free Sample */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr', gap: '8px', alignItems: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => addToCart({
+                    id: product.id,
+                    title: product.title,
+                    slug: product.slug,
+                    sku: product.sku,
+                    featuredImage: selectedImg || product.featuredImage,
+                    unitRate,
+                    volume: selectedVolume,
+                    cartons: totalCartons,
+                    total: estTotal
+                  })}
+                  className="btn btn-primary-green"
+                  style={{ width: '100%', justifyContent: 'center', padding: '10px 12px', fontSize: '0.84rem', fontWeight: 800 }}
+                  title="Add selected volume to wholesale cart"
                 >
-                  ⚡ Get Factory Proforma RFQ
-                </a>
+                  🛒 Add to Cart
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsRfqModalOpen(true)}
+                  className="btn btn-light-green-outline"
+                  style={{ width: '100%', justifyContent: 'center', padding: '10px 10px', fontSize: '0.84rem', fontWeight: 800, background: '#f7fbf8' }}
+                  title="Open instant factory quote form"
+                >
+                  ⚡ Instant RFQ
+                </button>
 
                 <button
                   type="button"
                   onClick={() => addSample(product)}
-                  className="btn btn-light-green-outline btn-lg"
-                  style={{ width: '100%', justifyContent: 'center', background: '#ffffff' }}
+                  className="btn btn-light-green-outline"
+                  style={{ width: '100%', justifyContent: 'center', padding: '10px 10px', fontSize: '0.84rem', fontWeight: 700, background: '#ffffff' }}
+                  title="Request free evaluation sample pieces"
                 >
-                  📦 Add to Free Sample Box
+                  📦 Free Sample
                 </button>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '14px', fontSize: '0.78rem', color: '#486153' }}>
-                <span>📦 <strong>MOQ:</strong> {product.moq || 2000} pieces</span>
-                <span>⏱️ <strong>Lead Time:</strong> Dispatches in 24-48 hrs</span>
-                <span>🚛 <strong>Pan-India & Export:</strong> FCL / LCL Available</span>
+              {/* Simple & Clean Dispatch Info Micro-Grid (Zero Text Overlap) */}
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(3, 1fr)', 
+                gap: '4px', 
+                marginTop: '14px', 
+                padding: '9px 12px',
+                background: '#ffffff',
+                border: '1px solid #ddecde',
+                borderRadius: '12px',
+                textAlign: 'center'
+              }}>
+                <div>
+                  <span style={{ color: '#7a9485', display: 'block', fontSize: '0.66rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.3px' }}>
+                    📦 Minimum MOQ
+                  </span>
+                  <strong style={{ color: '#1b4332', fontSize: '0.78rem', display: 'block', marginTop: '2px' }}>
+                    {product.moq || 2000} pcs
+                  </strong>
+                </div>
+                <div style={{ borderLeft: '1px solid #e5ebe7', borderRight: '1px solid #e5ebe7' }}>
+                  <span style={{ color: '#7a9485', display: 'block', fontSize: '0.66rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.3px' }}>
+                    ⏱️ Dispatch
+                  </span>
+                  <strong style={{ color: '#1b4332', fontSize: '0.78rem', display: 'block', marginTop: '2px' }}>
+                    24-48 Hours
+                  </strong>
+                </div>
+                <div>
+                  <span style={{ color: '#7a9485', display: 'block', fontSize: '0.66rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.3px' }}>
+                    🚛 Logistics
+                  </span>
+                  <strong style={{ color: '#1b4332', fontSize: '0.78rem', display: 'block', marginTop: '2px' }}>
+                    Pan-India FCL/LCL
+                  </strong>
+                </div>
               </div>
             </div>
 
-            {/* Instant Proforma RFQ Form */}
-            <div id="proformaRfq" style={{ background: '#f7faf8', border: '1.5px solid #ddecde', borderRadius: '18px', padding: '22px' }}>
-              <h3 style={{ fontSize: '1.1rem', color: '#1b4332', marginBottom: '6px' }}>
-                Quick Direct Factory Quote for {selectedVolume.toLocaleString()} pcs
-              </h3>
-              <p style={{ fontSize: '0.82rem', color: '#486153', marginBottom: '14px' }}>
-                Get an official proforma invoice with GST, transport freight estimate & debossing setup directly on WhatsApp.
-              </p>
+            {/* Instant Proforma RFQ Popup Modal */}
+            {isRfqModalOpen && (
+              <div 
+                onClick={() => setIsRfqModalOpen(false)}
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(10, 30, 20, 0.75)',
+                  backdropFilter: 'blur(8px)',
+                  zIndex: 99999,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '20px'
+                }}
+              >
+                <div 
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    background: '#ffffff',
+                    borderRadius: '24px',
+                    width: '100%',
+                    maxWidth: '540px',
+                    maxHeight: '90vh',
+                    overflowY: 'auto',
+                    boxShadow: '0 25px 60px rgba(0,0,0,0.35)',
+                    border: '1.5px solid #ddecde',
+                    animation: 'fadeInUp 0.25s ease-out'
+                  }}
+                >
+                  {/* Modal Header */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    padding: '20px 24px',
+                    borderBottom: '1px solid #eef3ef',
+                    background: 'linear-gradient(180deg, #f7faf8 0%, #ffffff 100%)'
+                  }}>
+                    <div>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#dcfce7', color: '#15803d', fontSize: '0.74rem', fontWeight: 800, padding: '3px 10px', borderRadius: '999px', marginBottom: '6px' }}>
+                        ⚡ Direct Factory Proforma RFQ
+                      </div>
+                      <h3 style={{ fontSize: '1.25rem', color: '#1b4332', margin: 0, fontWeight: 800 }}>
+                        {product.title}
+                      </h3>
+                      <p style={{ fontSize: '0.8rem', color: '#52796f', margin: '4px 0 0' }}>
+                        Volume: <strong>{selectedVolume.toLocaleString()} pcs</strong> • Rate: <strong>₹{unitRate}/pc</strong> • Est. Total: <strong>₹{estTotal}</strong> ({totalCartons} Cartons)
+                      </p>
+                    </div>
 
-              {rfqSubmitted ? (
-                <div style={{ background: '#dcfce7', border: '1px solid #86efac', padding: '16px', borderRadius: '12px', textAlign: 'center' }}>
-                  <strong style={{ color: '#15803d', display: 'block', fontSize: '0.98rem' }}>✓ Proforma RFQ Dispatched to Production Team!</strong>
-                  <p style={{ fontSize: '0.84rem', color: '#166534', margin: '4px 0 0' }}>
-                    Our commercial desk has received your request for {selectedVolume.toLocaleString()} units of {product.title}. A quote will be messaged to your phone.
-                  </p>
+                    <button 
+                      type="button" 
+                      onClick={() => setIsRfqModalOpen(false)}
+                      style={{
+                        width: '34px',
+                        height: '34px',
+                        borderRadius: '50%',
+                        background: '#f0f4f1',
+                        border: 'none',
+                        color: '#1b4332',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}
+                      title="Close"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Modal Body */}
+                  <div style={{ padding: '24px' }}>
+                    {rfqSubmitted ? (
+                      <div style={{ background: '#dcfce7', border: '1px solid #86efac', padding: '24px', borderRadius: '16px', textAlign: 'center' }}>
+                        <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>✓</div>
+                        <strong style={{ color: '#15803d', display: 'block', fontSize: '1.1rem', fontWeight: 800 }}>
+                          Proforma RFQ Dispatched!
+                        </strong>
+                        <p style={{ fontSize: '0.86rem', color: '#166534', margin: '8px 0 16px', lineHeight: '1.5' }}>
+                          Our commercial production desk has received your request for {selectedVolume.toLocaleString()} units of {product.title}. An official invoice quote with GST and transport estimate will be sent to your WhatsApp.
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setRfqSubmitted(false);
+                            setIsRfqModalOpen(false);
+                          }}
+                          className="btn btn-primary-green"
+                          style={{ padding: '8px 20px', fontSize: '0.84rem' }}
+                        >
+                          Close Window
+                        </button>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleRfq} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.74rem', fontWeight: 700, color: '#1b4332', marginBottom: '4px' }}>
+                              Contact Name *
+                            </label>
+                            <input 
+                              type="text"
+                              required
+                              placeholder="e.g. Ramesh Sharma"
+                              value={rfqForm.name}
+                              onChange={(e) => setRfqForm({...rfqForm, name: e.target.value})}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem', boxSizing: 'border-box' }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.74rem', fontWeight: 700, color: '#1b4332', marginBottom: '4px' }}>
+                              WhatsApp Mobile *
+                            </label>
+                            <input 
+                              type="tel"
+                              required
+                              placeholder="e.g. +91 98765 43210"
+                              value={rfqForm.phone}
+                              onChange={(e) => setRfqForm({...rfqForm, phone: e.target.value})}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem', boxSizing: 'border-box' }}
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.74rem', fontWeight: 700, color: '#1b4332', marginBottom: '4px' }}>
+                              Company / Restaurant / Brand
+                            </label>
+                            <input 
+                              type="text"
+                              placeholder="e.g. Haldiram / Cloud Kitchen"
+                              value={rfqForm.company}
+                              onChange={(e) => setRfqForm({...rfqForm, company: e.target.value})}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem', boxSizing: 'border-box' }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontSize: '0.74rem', fontWeight: 700, color: '#1b4332', marginBottom: '4px' }}>
+                              Delivery Destination City / Pin
+                            </label>
+                            <input 
+                              type="text"
+                              placeholder="e.g. Mumbai 400001"
+                              value={rfqForm.city}
+                              onChange={(e) => setRfqForm({...rfqForm, city: e.target.value})}
+                              style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem', boxSizing: 'border-box' }}
+                            />
+                          </div>
+                        </div>
+
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: '#1b4332', cursor: 'pointer', background: '#f7faf8', padding: '8px 12px', borderRadius: '8px', border: '1px solid #ddecde' }}>
+                          <input 
+                            type="checkbox"
+                            checked={rfqForm.customDeboss}
+                            onChange={(e) => setRfqForm({...rfqForm, customDeboss: e.target.checked})}
+                          />
+                          <span>Include Custom Brand Logo Debossing Tooling quotation</span>
+                        </label>
+
+                        <button 
+                          type="submit" 
+                          className="btn btn-primary-green"
+                          style={{ width: '100%', justifyContent: 'center', padding: '12px 18px', fontSize: '0.92rem', fontWeight: 800, marginTop: '4px' }}
+                        >
+                          Send Proforma RFQ for {selectedVolume.toLocaleString()} pcs →
+                        </button>
+                      </form>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <form onSubmit={handleRfq} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                    <input 
-                      type="text"
-                      required
-                      placeholder="Contact Name *"
-                      value={rfqForm.name}
-                      onChange={(e) => setRfqForm({...rfqForm, name: e.target.value})}
-                      style={{ padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem' }}
-                    />
-                    <input 
-                      type="tel"
-                      required
-                      placeholder="WhatsApp Mobile Number *"
-                      value={rfqForm.phone}
-                      onChange={(e) => setRfqForm({...rfqForm, phone: e.target.value})}
-                      style={{ padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem' }}
-                    />
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                    <input 
-                      type="text"
-                      placeholder="Company / Restaurant / Brand Name"
-                      value={rfqForm.company}
-                      onChange={(e) => setRfqForm({...rfqForm, company: e.target.value})}
-                      style={{ padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem' }}
-                    />
-                    <input 
-                      type="text"
-                      placeholder="Delivery Destination City / Pin Code"
-                      value={rfqForm.city}
-                      onChange={(e) => setRfqForm({...rfqForm, city: e.target.value})}
-                      style={{ padding: '9px 12px', borderRadius: '8px', border: '1px solid #b7e4c7', fontSize: '0.86rem' }}
-                    />
-                  </div>
-
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.82rem', color: '#1b4332', cursor: 'pointer', margin: '4px 0' }}>
-                    <input 
-                      type="checkbox"
-                      checked={rfqForm.customDeboss}
-                      onChange={(e) => setRfqForm({...rfqForm, customDeboss: e.target.checked})}
-                    />
-                    <span>Include Custom Brand Logo Debossing Tooling quotation</span>
-                  </label>
-
-                  <button type="submit" className="btn btn-primary-green btn-block">
-                    Send Proforma RFQ for {selectedVolume.toLocaleString()} pcs →
-                  </button>
-                </form>
-              )}
-            </div>
+              </div>
+            )}
 
           </div>
 

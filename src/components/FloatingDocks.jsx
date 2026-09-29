@@ -2,7 +2,12 @@
 
 import React from 'react';
 
-export default function FloatingDocks({ sampleCount = 0, onOpenSampleModal }) {
+export default function FloatingDocks({ 
+  sampleCount = 0, 
+  onOpenSampleModal,
+  cartCount = 0,
+  onOpenCartModal = () => {}
+}) {
   const scrollToTop = () => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -18,6 +23,21 @@ export default function FloatingDocks({ sampleCount = 0, onOpenSampleModal }) {
     <>
       {/* LEFT-SIDE FLOATING ACTION DOCK (ICON ONLY -> EXPANDS ON HOVER) */}
       <aside className="floating-dock floating-dock-left" aria-label="Left Quick Navigation">
+        {/* Commercial Wholesale Cart */}
+        <button 
+          type="button" 
+          onClick={onOpenCartModal} 
+          className="float-dock-btn" 
+          id="leftCartBtn" 
+          title="Open Commercial Wholesale Cart"
+        >
+          <span className="dock-icon" style={{ fontSize: '1.1rem' }}>
+            🛒
+          </span>
+          <span className="dock-text">Wholesale Cart</span>
+          <span className="badge-mini" style={{ background: '#16a34a' }}>{cartCount}</span>
+        </button>
+
         <button 
           type="button" 
           onClick={onOpenSampleModal} 
