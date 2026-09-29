@@ -849,7 +849,7 @@ export default function ProductDetailClient({ product, related }) {
                 <h3 style={{ fontSize: '1.7rem', color: '#1b4332', margin: '6px 0 0' }}>Recommended Commercial Pairings</h3>
               </div>
               <a href="/products" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.9rem' }}>
-                View Full Catalog (27 Products) →
+                View Full Catalog →
               </a>
             </div>
 

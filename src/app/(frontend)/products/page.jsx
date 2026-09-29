@@ -43,7 +43,7 @@ function ProductsCatalogContent() {
           <span className="light-green-tag">Direct Factory Supply</span>
           <h1 style={{ fontSize: '2.5rem', color: '#1b4332', margin: '8px 0 6px' }}>Complete Tableware Catalog</h1>
           <p style={{ color: '#486153', fontSize: '1.05rem', maxWidth: '720px' }}>
-            Explore all 27 certified sugarcane bagasse tableware lines. Direct manufacturer pricing with custom debossing tooling and pan-India dispatch.
+            Explore our certified sugarcane bagasse tableware lines. Direct manufacturer pricing with custom debossing tooling and pan-India dispatch.
           </p>
         </div>
 
@@ -56,7 +56,7 @@ function ProductsCatalogContent() {
               onClick={() => setCategory('all')}
               style={{ border: 'none', padding: '8px 16px', borderRadius: '999px', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', background: category === 'all' ? '#2d6a4f' : '#f0fbf4', color: category === 'all' ? '#ffffff' : '#2d6a4f' }}
             >
-              All Items ({productsData.length})
+              All Items
             </button>
             <button 
               type="button" 

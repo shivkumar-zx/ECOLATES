@@ -49,7 +49,7 @@ export default function AboutPage() {
               Ecolates was founded by food service industry veterans in India and abroad with a simple conviction: commercial dining should never cost the Earth. We manufacture 100% biodegradable and home-compostable sugarcane bagasse tableware at industrial scale.
             </p>
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <a href="/products" className="btn btn-primary-green btn-lg">Explore 27 Products →</a>
+              <a href="/products" className="btn btn-primary-green btn-lg">Explore Full Catalog →</a>
               <a href="/certifications" className="btn btn-light-green-outline btn-lg" style={{ background: '#fff' }}>View Lab Certifications</a>
             </div>
           </div>

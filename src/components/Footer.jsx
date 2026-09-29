@@ -30,7 +30,7 @@ export default function Footer() {
             <li><a href="/products?category=trays">Meal & Bento Trays (3, 4, 5-CP)</a></li>
             <li><a href="/products?category=containers">Hinged Clamshell Boxes</a></li>
             <li><a href="/products?category=bowls">Soup & Curry Bowls</a></li>
-            <li><a href="/products">All 27 Products Catalog</a></li>
+            <li><a href="/products">Full Commercial Catalog</a></li>
           </ul>
         </div>
 

@@ -190,8 +190,8 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: '1.35fr 1fr', overflow: 'hidden', flexGrow: 1 }}>
             
-            {/* Left Column: Product Selection Grid */}
-            <div style={{ padding: '24px 28px', overflowY: 'auto', borderRight: '1.5px solid #ddecde', background: '#fafdfa', display: 'flex', flexDirection: 'column' }}>
+            {/* Left Column: Product Selection Grid (Clean Vertical Flow - Zero Horizontal Slide) */}
+            <div style={{ padding: '24px 28px', overflowY: 'auto', overflowX: 'hidden', borderRight: '1.5px solid #ddecde', background: '#fafdfa', display: 'flex', flexDirection: 'column', width: '100%', boxSizing: 'border-box' }}>
               
               {/* Step 1 Title & Capacity Counter */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
@@ -235,7 +235,7 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
               <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '8px', marginBottom: '14px' }}>
                 <input 
                   type="text"
-                  placeholder="Filter 27 products..."
+                  placeholder="Search products..."
                   value={sampleSearch}
                   onChange={(e) => setSampleSearch(e.target.value)}
                   style={{ padding: '8px 12px', borderRadius: '10px', border: '1px solid #b7e4c7', fontSize: '0.84rem' }}
@@ -245,7 +245,7 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
                   onChange={(e) => setFilterCategory(e.target.value)}
                   style={{ padding: '8px 10px', borderRadius: '10px', border: '1px solid #b7e4c7', fontSize: '0.84rem', background: '#fff' }}
                 >
-                  <option value="all">All Categories (27)</option>
+                  <option value="all">All Categories</option>
                   <option value="plates">Plates</option>
                   <option value="bowls">Bowls</option>
                   <option value="trays">Trays</option>
@@ -253,8 +253,8 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
                 </select>
               </div>
 
-              {/* Product Cards Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', maxHeight: '330px', overflowY: 'auto', paddingRight: '4px', marginBottom: '14px' }}>
+              {/* Product Cards Grid (Zero Horizontal Slide) */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px', maxHeight: '340px', overflowY: 'auto', overflowX: 'hidden', paddingRight: '4px', marginBottom: '14px', width: '100%', boxSizing: 'border-box' }}>
                 {filteredProducts.map((p) => {
                   const isChecked = selectedProductIds.includes(p.id);
                   return (
@@ -271,7 +271,9 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
                         background: isChecked ? '#e8f7ee' : '#ffffff',
                         cursor: 'pointer',
                         transition: 'all 0.15s',
-                        boxShadow: isChecked ? '0 4px 12px rgba(45, 106, 79, 0.12)' : 'none'
+                        boxShadow: isChecked ? '0 4px 12px rgba(45, 106, 79, 0.12)' : 'none',
+                        minWidth: 0,
+                        boxSizing: 'border-box'
                       }}
                     >
                       <div style={{ width: '22px', height: '22px', borderRadius: '50%', border: isChecked ? '2px solid #2d6a4f' : '1.5px solid #b7e4c7', background: isChecked ? '#2d6a4f' : '#fff', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.72rem', fontWeight: 'bold', flexShrink: 0 }}>
@@ -284,8 +286,8 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
                         style={{ width: '44px', height: '44px', objectFit: 'contain', borderRadius: '8px', background: '#f7fbf8', flexShrink: 0 }} 
                       />
 
-                      <div style={{ overflow: 'hidden' }}>
-                        <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#1b4332', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      <div style={{ overflow: 'hidden', minWidth: 0, flex: 1 }}>
+                        <span style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#1b4332', lineHeight: '1.25', wordBreak: 'break-word' }}>
                           {p.title}
                         </span>
                         <small style={{ fontSize: '0.72rem', color: '#7a9485' }}>{p.category}</small>

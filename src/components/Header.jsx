@@ -88,7 +88,7 @@ export default function Header({
                 </svg>
                 <input
                   type="text"
-                  placeholder="Search 27 bagasse products (plates, bowls, clamshells, meal trays)..."
+                  placeholder="Search sugarcane tableware (plates, bowls, clamshells, meal trays)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -161,7 +161,7 @@ export default function Header({
           <div className="container nav-tier-layout">
             <ul className="clean-nav-list">
               <li><a href="/" className="nav-item-link">Home</a></li>
-              <li><a href="/products" className="nav-item-link">All Products (27)</a></li>
+              <li><a href="/products" className="nav-item-link">All Products</a></li>
               <li><a href="/products?category=plates" className="nav-item-link">Plates</a></li>
               <li><a href="/products?category=trays" className="nav-item-link">Meal Trays</a></li>
               <li><a href="/products?category=containers" className="nav-item-link">Clamshells</a></li>

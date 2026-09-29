@@ -11,7 +11,15 @@ export default function HomePage() {
   const [camProductId, setCamProductId] = useState(1679); // Default 6oz Soup Bowl
   const [rfqSubmitted, setRfqSubmitted] = useState(false);
   const [bundleSlide, setBundleSlide] = useState(0);
+  const [bestSellerSlide, setBestSellerSlide] = useState(0);
   const [industrySlide, setIndustrySlide] = useState(0);
+  const [customBundle, setCustomBundle] = useState({
+    plates: 500,
+    bowls: 500,
+    trays: 250,
+    clamshells: 500,
+    cutlery: 500
+  });
   const [rfqData, setRfqData] = useState({
     name: '',
     brand: '',
@@ -101,9 +109,8 @@ export default function HomePage() {
     ? productsData
     : productsData.filter(p => p.categorySlug === activeCategory);
 
-  // Top Bestsellers (Real products guaranteed)
-  const bestSellers = productsData.filter(p => p.bestseller || [1679, 2877, 2820, 1674, 752].includes(p.id));
-  const displayBestSellers = bestSellers.length >= 4 ? bestSellers.slice(0, 4) : productsData.slice(0, 4);
+  // Top Bestsellers (Real products guaranteed for slider)
+  const bestSellers = productsData.filter(p => p.bestseller || [1679, 2877, 2820, 1674, 752, 2800, 750, 753].includes(p.id));
 
   // Key products for bundles & industries
   const pSoupBowl = productsData.find(p => p.slug === 'product-1679') || productsData[0];
@@ -175,8 +182,64 @@ export default function HomePage() {
       products: [pPavBhaji, pRoundPlate],
       price: '₹7,200',
       regularPrice: '₹9,000'
+    },
+    {
+      id: 'b4',
+      title: 'QSR Cafe, Bakery & Street Food Bundle',
+      tag: '☕ Quick-Serve & Cafe Pack',
+      savings: 'Save 16% Cafe Rate',
+      desc: 'Compact aesthetic tableware for artisanal burgers, sandwiches, pastries, noodles, and hot beverages.',
+      items: [
+        '750 pcs × 9x6" Clamshell Sandwich & Burger Boxes',
+        '750 pcs × 6" Square Dessert & Snack Plates',
+        '750 pcs × 8oz (230ml) Hot Gravy & Soup Bowls',
+        '750 pcs × Birchwood Compostable Forks'
+      ],
+      products: [pSquarePlate, pContainer],
+      price: '₹5,400',
+      regularPrice: '₹6,450'
     }
   ];
+
+  // Custom Bundle Builder Calculations & Handlers
+  const customTotalItems = customBundle.plates + customBundle.bowls + customBundle.trays + customBundle.clamshells + customBundle.cutlery;
+  const customTotalCartons = Math.ceil(customBundle.plates / 500) + Math.ceil(customBundle.bowls / 1000) + Math.ceil(customBundle.trays / 250) + Math.ceil(customBundle.clamshells / 500) + Math.ceil(customBundle.cutlery / 1000);
+  const customRawPrice = Math.round(
+    (customBundle.plates * 2.85) +
+    (customBundle.bowls * 1.85) +
+    (customBundle.trays * 5.20) +
+    (customBundle.clamshells * 4.90) +
+    (customBundle.cutlery * 0.95)
+  );
+  const customSavings = Math.round(customRawPrice * 0.15);
+  const customEstPrice = customRawPrice - customSavings;
+
+  const updateCustomBundle = (key, delta) => {
+    setCustomBundle(prev => {
+      const newVal = Math.max(0, (prev[key] || 0) + delta);
+      return { ...prev, [key]: newVal };
+    });
+  };
+
+  const orderCustomBundleRFQ = () => {
+    const summary = `Custom Built Bundle: ${customBundle.plates} Plates, ${customBundle.bowls} Bowls, ${customBundle.trays} Meal Trays, ${customBundle.clamshells} Clamshells, ${customBundle.cutlery} Cutlery sets. Total ${customTotalItems} pcs (~₹${customEstPrice.toLocaleString()}).`;
+    setRfqData(prev => ({
+      ...prev,
+      volume: customTotalItems.toString(),
+      notes: summary
+    }));
+    const rfqEl = document.getElementById('bulkEnquiry');
+    if (rfqEl) {
+      rfqEl.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const addCustomBundleToSamples = () => {
+    if (customBundle.plates > 0 && pRoundPlate) addSample(pRoundPlate);
+    if (customBundle.bowls > 0 && pSoupBowl) addSample(pSoupBowl);
+    if (customBundle.trays > 0 && pMealTray) addSample(pMealTray);
+    if (customBundle.clamshells > 0 && pContainer) addSample(pContainer);
+  };
 
   const industries = [
     {
@@ -254,7 +317,7 @@ export default function HomePage() {
 
             <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
               <a href="#featuredShowcase" className="btn btn-primary-green btn-lg">
-                <span>Explore 27 Commercial Products ↓</span>
+                <span>Explore Commercial Products ↓</span>
               </a>
               <a href="#camStudio" className="btn btn-light-green-outline btn-lg" style={{ background: '#ffffff' }}>
                 <span>🔍 360° Cam Inspection</span>
@@ -333,7 +396,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 2. TOP PROMINENT PRODUCT SHOWCASE (ALL 27 PRODUCTS) */}
+      {/* 2. TOP PROMINENT PRODUCT SHOWCASE */}
       <section className="section-container bg-white" id="featuredShowcase">
         <div className="container">
           
@@ -342,7 +405,7 @@ export default function HomePage() {
               <span className="light-green-tag">Direct Catalog Access</span>
               <h2 className="main-section-title">Commercial Tableware & Packaging Products</h2>
               <p className="section-desc" style={{ margin: 0 }}>
-                Showing all 27 certified bagasse products manufactured directly in our certified facility.
+                Showing certified commercial bagasse tableware manufactured directly in our certified facility.
               </p>
             </div>
             
@@ -353,7 +416,7 @@ export default function HomePage() {
                 onClick={() => setActiveCategory('all')} 
                 style={{ border: 'none', padding: '8px 16px', borderRadius: '999px', fontSize: '0.82rem', fontWeight: 700, cursor: 'pointer', background: activeCategory === 'all' ? '#2d6a4f' : 'transparent', color: activeCategory === 'all' ? '#ffffff' : '#2d6a4f' }}
               >
-                All (27)
+                All Products
               </button>
               <button 
                 type="button" 
@@ -454,64 +517,215 @@ export default function HomePage() {
               </p>
             </div>
 
-            <a href="/products" className="btn btn-light-green-outline" style={{ fontWeight: 700 }}>
-              View All 27 Products →
-            </a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              {bestSellers.length > 4 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setBestSellerSlide(prev => Math.max(0, prev - 1))}
+                    disabled={bestSellerSlide === 0}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: bestSellerSlide === 0 ? '#e2ece5' : '#ffffff',
+                      color: bestSellerSlide === 0 ? '#9cb5a5' : '#1b4332',
+                      border: '1.5px solid #b7e4c7',
+                      fontSize: '1.15rem',
+                      fontWeight: 'bold',
+                      cursor: bestSellerSlide === 0 ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                      transition: 'all 0.2s'
+                    }}
+                    title="Previous Slide"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBestSellerSlide(prev => Math.min(bestSellers.length - 4, prev + 1))}
+                    disabled={bestSellerSlide >= bestSellers.length - 4}
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      background: bestSellerSlide >= bestSellers.length - 4 ? '#e2ece5' : '#2d6a4f',
+                      color: bestSellerSlide >= bestSellers.length - 4 ? '#9cb5a5' : '#ffffff',
+                      border: '1.5px solid #2d6a4f',
+                      fontSize: '1.15rem',
+                      fontWeight: 'bold',
+                      cursor: bestSellerSlide >= bestSellers.length - 4 ? 'not-allowed' : 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                      transition: 'all 0.2s'
+                    }}
+                    title="Next Slide"
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+              <a href="/products" className="btn btn-light-green-outline" style={{ fontWeight: 700 }}>
+                View Full Catalog →
+              </a>
+            </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-            {displayBestSellers.map((p, index) => (
-              <div key={p.id} className="product-card" style={{ border: '2px solid #52b788' }}>
-                
-                {/* Bestseller Badge */}
-                <div style={{ position: 'absolute', top: '12px', left: '12px', background: '#2d6a4f', color: '#fff', fontSize: '0.72rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px', zIndex: 2 }}>
-                  #{index + 1} Best Seller
-                </div>
-
-                <a href={`/products/${p.slug}`} className="card-img-wrap">
-                  <img src={p.featuredImage} alt={p.title} loading="lazy" />
-                </a>
-
-                <div className="product-card-body">
-                  <span className="product-cat-tag">{p.category}</span>
-                  <a href={`/products/${p.slug}`}>
-                    <h3 className="product-card-title">{p.title}</h3>
-                  </a>
-                  
-                  <div className="product-meta-pills" style={{ marginTop: '8px' }}>
-                    <span className="meta-pill">Standard MOQ: {p.moq}</span>
-                    <span className="meta-pill">-20°C to 120°C</span>
-                  </div>
-
-                  <div className="product-card-footer">
-                    <div className="card-price-col">
-                      <span className="card-price-sub">Factory Rate</span>
-                      <span className="card-price-val">{p.price}</span>
+          {bestSellers.length > 4 ? (
+            <div style={{ overflow: 'hidden', padding: '6px 2px 14px' }}>
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  gap: '24px', 
+                  transform: `translateX(calc(-${bestSellerSlide} * (25% + 6px)))`, 
+                  transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                  willChange: 'transform'
+                }}
+              >
+                {bestSellers.map((p, index) => (
+                  <div 
+                    key={p.id} 
+                    className="product-card" 
+                    style={{ 
+                      flex: '0 0 calc(25% - 18px)', 
+                      minWidth: '260px',
+                      border: '2px solid #52b788',
+                      boxShadow: '0 4px 16px rgba(45, 106, 79, 0.08)'
+                    }}
+                  >
+                    
+                    {/* Bestseller Badge */}
+                    <div style={{ position: 'absolute', top: '12px', left: '12px', background: '#2d6a4f', color: '#fff', fontSize: '0.72rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px', zIndex: 2 }}>
+                      #{index + 1} Best Seller
                     </div>
 
-                    <div className="card-actions-row">
-                      <button
-                        type="button"
-                        onClick={() => addSample(p)}
-                        className="btn btn-light-green-outline"
-                        style={{ padding: '6px 10px', fontSize: '0.78rem' }}
-                      >
-                        + Sample
-                      </button>
-                      <a 
-                        href={`/products/${p.slug}`} 
-                        className="btn btn-primary-green" 
-                        style={{ padding: '6px 12px', fontSize: '0.78rem' }}
-                      >
-                        Details →
+                    <a href={`/products/${p.slug}`} className="card-img-wrap">
+                      <img src={p.featuredImage} alt={p.title} loading="lazy" />
+                    </a>
+
+                    <div className="product-card-body">
+                      <span className="product-cat-tag">{p.category}</span>
+                      <a href={`/products/${p.slug}`}>
+                        <h3 className="product-card-title">{p.title}</h3>
                       </a>
+                      
+                      <div className="product-meta-pills" style={{ marginTop: '8px' }}>
+                        <span className="meta-pill">Standard MOQ: {p.moq}</span>
+                        <span className="meta-pill">-20°C to 120°C</span>
+                      </div>
+
+                      <div className="product-card-footer">
+                        <div className="card-price-col">
+                          <span className="card-price-sub">Factory Rate</span>
+                          <span className="card-price-val">{p.price}</span>
+                        </div>
+
+                        <div className="card-actions-row">
+                          <button
+                            type="button"
+                            onClick={() => addSample(p)}
+                            className="btn btn-light-green-outline"
+                            style={{ padding: '6px 10px', fontSize: '0.78rem' }}
+                          >
+                            + Sample
+                          </button>
+                          <a 
+                            href={`/products/${p.slug}`} 
+                            className="btn btn-primary-green" 
+                            style={{ padding: '6px 12px', fontSize: '0.78rem' }}
+                          >
+                            Details →
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                ))}
+              </div>
+
+              {/* Slider Dots */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '22px' }}>
+                {Array.from({ length: bestSellers.length - 3 }).map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setBestSellerSlide(i)}
+                    style={{
+                      width: bestSellerSlide === i ? '28px' : '9px',
+                      height: '9px',
+                      borderRadius: '5px',
+                      background: bestSellerSlide === i ? '#2d6a4f' : '#b7e4c7',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    title={`Slide to position ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+              {bestSellers.map((p, index) => (
+                <div key={p.id} className="product-card" style={{ border: '2px solid #52b788' }}>
+                  
+                  {/* Bestseller Badge */}
+                  <div style={{ position: 'absolute', top: '12px', left: '12px', background: '#2d6a4f', color: '#fff', fontSize: '0.72rem', fontWeight: 800, padding: '3px 8px', borderRadius: '6px', zIndex: 2 }}>
+                    #{index + 1} Best Seller
+                  </div>
+
+                  <a href={`/products/${p.slug}`} className="card-img-wrap">
+                    <img src={p.featuredImage} alt={p.title} loading="lazy" />
+                  </a>
+
+                  <div className="product-card-body">
+                    <span className="product-cat-tag">{p.category}</span>
+                    <a href={`/products/${p.slug}`}>
+                      <h3 className="product-card-title">{p.title}</h3>
+                    </a>
+                    
+                    <div className="product-meta-pills" style={{ marginTop: '8px' }}>
+                      <span className="meta-pill">Standard MOQ: {p.moq}</span>
+                      <span className="meta-pill">-20°C to 120°C</span>
+                    </div>
+
+                    <div className="product-card-footer">
+                      <div className="card-price-col">
+                        <span className="card-price-sub">Factory Rate</span>
+                        <span className="card-price-val">{p.price}</span>
+                      </div>
+
+                      <div className="card-actions-row">
+                        <button
+                          type="button"
+                          onClick={() => addSample(p)}
+                          className="btn btn-light-green-outline"
+                          style={{ padding: '6px 10px', fontSize: '0.78rem' }}
+                        >
+                          + Sample
+                        </button>
+                        <a 
+                          href={`/products/${p.slug}`} 
+                          className="btn btn-primary-green" 
+                          style={{ padding: '6px 12px', fontSize: '0.78rem' }}
+                        >
+                          Details →
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
+            </div>
+          )}
 
         </div>
       </section>
@@ -574,17 +788,18 @@ export default function HomePage() {
             borderRadius: '20px',
             padding: '12px 20px'
           }}>
-            {/* Quick Bundle Selector Tabs */}
+            {/* Quick Bundle Selector Tabs (4 Curated Packs + 1 Custom Builder) */}
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {starterBundles.map((b, idx) => {
                 const isActive = bundleSlide === idx;
+                const packNames = ['Cloud Kitchen', 'Corporate Cafeteria', 'Banquet Catering', 'QSR Cafe & Bakery'];
                 return (
                   <button
                     key={b.id}
                     type="button"
                     onClick={() => setBundleSlide(idx)}
                     style={{
-                      padding: '9px 18px',
+                      padding: '9px 16px',
                       borderRadius: '999px',
                       fontSize: '0.84rem',
                       fontWeight: 700,
@@ -595,24 +810,47 @@ export default function HomePage() {
                       transition: 'all 0.2s',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '8px'
+                      gap: '6px'
                     }}
                   >
                     <span>{b.tag.split(' ')[0]}</span>
-                    <span>Pack {idx + 1}: {idx === 0 ? 'Cloud Kitchen' : idx === 1 ? 'Corporate Cafeteria' : 'Banquet Catering'}</span>
+                    <span>Pack {idx + 1}: {packNames[idx] || b.title.split(' ')[0]}</span>
                   </button>
                 );
               })}
+
+              {/* 5th Tab: Custom Build For Yourself */}
+              <button
+                type="button"
+                onClick={() => setBundleSlide(4)}
+                style={{
+                  padding: '9px 18px',
+                  borderRadius: '999px',
+                  fontSize: '0.84rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  border: bundleSlide === 4 ? '2px solid #52b788' : '1px solid rgba(255,215,0,0.4)',
+                  background: bundleSlide === 4 ? '#52b788' : 'rgba(255,215,0,0.15)',
+                  color: bundleSlide === 4 ? '#0d2818' : '#ffd166',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <span>🛠️</span>
+                <span>Build Your Own Bundle</span>
+              </button>
             </div>
 
             {/* Slider Arrow Controls & Counter */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#d8f3dc' }}>
-                Pack {bundleSlide + 1} of {starterBundles.length}
+                {bundleSlide === 4 ? 'Custom Mix (5 of 5)' : `Pack ${bundleSlide + 1} of 4`}
               </span>
               <button
                 type="button"
-                onClick={() => setBundleSlide(prev => (prev === 0 ? starterBundles.length - 1 : prev - 1))}
+                onClick={() => setBundleSlide(prev => (prev === 0 ? 4 : prev - 1))}
                 style={{
                   width: '38px',
                   height: '38px',
@@ -634,7 +872,7 @@ export default function HomePage() {
               </button>
               <button
                 type="button"
-                onClick={() => setBundleSlide(prev => (prev === starterBundles.length - 1 ? 0 : prev + 1))}
+                onClick={() => setBundleSlide(prev => (prev === 4 ? 0 : prev + 1))}
                 style={{
                   width: '38px',
                   height: '38px',
@@ -658,153 +896,428 @@ export default function HomePage() {
           </div>
 
           {/* Active Featured Bundle Spotlight Card (Full Width - Zero Cut-off) */}
-          {(() => {
-            const b = starterBundles[bundleSlide];
-            return (
-              <div 
-                style={{ 
-                  background: 'rgba(255, 255, 255, 0.98)', 
-                  border: '2px solid #52b788', 
-                  borderRadius: '26px', 
-                  padding: '36px', 
-                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
-                  position: 'relative',
-                  color: '#182a20',
-                  display: 'grid',
-                  gridTemplateColumns: '1.15fr 0.85fr',
-                  gap: '36px',
-                  alignItems: 'center'
-                }}
-              >
-                {/* Left Side: Bundle Info & Checklist */}
-                <div>
-                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#15803d', background: '#dcfce7', padding: '6px 14px', borderRadius: '999px', border: '1px solid #b7e4c7' }}>
-                      {b.tag}
-                    </span>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#2d6a4f', background: '#f0fbf4', padding: '5px 12px', borderRadius: '8px', border: '1px solid #b7e4c7' }}>
-                      {b.savings}
-                    </span>
-                  </div>
-
-                  <h3 style={{ fontSize: '1.75rem', color: '#1b4332', marginBottom: '12px', fontWeight: 800, lineHeight: '1.3' }}>
-                    {b.title}
-                  </h3>
-                  <p style={{ color: '#486153', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '22px' }}>
-                    {b.desc}
-                  </p>
-
-                  <div style={{ background: '#f7fbf8', border: '1px solid #ddecde', borderRadius: '16px', padding: '20px', marginBottom: '24px' }}>
-                    <div style={{ fontSize: '0.84rem', fontWeight: 800, color: '#1b4332', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Included Commercial Specifications:
-                    </div>
-                    <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.9rem', color: '#2d6a4f', fontWeight: 600 }}>
-                      {b.items.map((item, i) => (
-                        <li key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                          <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.1rem' }}>✓</span> {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', paddingTop: '18px', borderTop: '1px solid #ddecde' }}>
-                    <div>
-                      <span style={{ fontSize: '0.82rem', color: '#7a9485', textDecoration: 'line-through', display: 'block' }}>Regular: {b.regularPrice}</span>
-                      <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#2d6a4f', lineHeight: '1' }}>{b.price}</div>
-                      <span style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 700 }}>*Taxes extra. Bulk freight door delivery.</span>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                      {b.products && b.products[0] && (
-                        <button 
-                          type="button" 
-                          onClick={() => addSample(b.products[0])}
-                          className="btn btn-light-green-outline"
-                          style={{ padding: '12px 18px', fontSize: '0.86rem', fontWeight: 800 }}
-                          title="Add items to evaluation sample box"
-                        >
-                          📦 Add to Sample Box
-                        </button>
-                      )}
-                      <a href="#bulkEnquiry" className="btn btn-primary-green" style={{ padding: '12px 22px', fontSize: '0.88rem', fontWeight: 800 }}>
-                        ⚡ Order Bundle RFQ
-                      </a>
-                    </div>
-                  </div>
+          {bundleSlide === 4 ? (
+            /* INTERACTIVE CUSTOM BUNDLE BUILDER (USER CAN BUILD FOR THEMSELVES) */
+            <div 
+              style={{ 
+                background: 'rgba(255, 255, 255, 0.98)', 
+                border: '2.5px solid #52b788', 
+                borderRadius: '26px', 
+                padding: '36px', 
+                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+                position: 'relative',
+                color: '#182a20',
+                display: 'grid',
+                gridTemplateColumns: '1.25fr 0.75fr',
+                gap: '36px',
+                alignItems: 'start'
+              }}
+            >
+              {/* Left Side: Interactive Configurator Steppers */}
+              <div>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#15803d', background: '#dcfce7', padding: '6px 14px', borderRadius: '999px', border: '1px solid #b7e4c7' }}>
+                    🛠️ Interactive Custom Tableware Configurator
+                  </span>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#2d6a4f', background: '#f0fbf4', padding: '5px 12px', borderRadius: '8px', border: '1px solid #b7e4c7' }}>
+                    Save 15% Direct Manufacturer Bundle Tier
+                  </span>
                 </div>
 
-                {/* Right Side: Visual Product Breakdown & Agricultural Fiber Guarantee */}
-                <div style={{ background: '#f0fbf4', borderRadius: '20px', padding: '24px', border: '1.5px solid #b7e4c7' }}>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#1b4332', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '14px' }}>
-                    Included Factory Products ({b.products ? b.products.length : 0}):
-                  </div>
+                <h3 style={{ fontSize: '1.75rem', color: '#1b4332', marginBottom: '8px', fontWeight: 800, lineHeight: '1.3' }}>
+                  Build Your Custom Commercial Tableware Bundle
+                </h3>
+                <p style={{ color: '#486153', fontSize: '0.92rem', lineHeight: '1.5', marginBottom: '22px' }}>
+                  Adjust exact unit requirements for your business model. Bulk consolidated freight, factory wholesale tiered pricing, and microwave-safe durability guaranteed.
+                </p>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
-                    {b.products && b.products.map((prod, pIdx) => prod && (
-                      <a 
-                        key={pIdx} 
-                        href={`/products/${prod.slug}`} 
-                        style={{ 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          gap: '12px', 
-                          background: '#ffffff', 
-                          padding: '12px 14px', 
-                          borderRadius: '14px', 
-                          border: '1px solid #ddecde', 
-                          textDecoration: 'none',
-                          boxShadow: '0 2px 8px rgba(45, 106, 79, 0.04)',
-                          transition: 'transform 0.15s, border-color 0.15s'
-                        }}
-                        title={`View ${prod.title}`}
-                      >
-                        <img 
-                          src={prod.featuredImage} 
-                          alt={prod.title} 
-                          style={{ width: '56px', height: '56px', objectFit: 'contain', background: '#fff', borderRadius: '10px', padding: '4px', border: '1px solid #e2ece5', flexShrink: 0 }} 
-                        />
-                        <div style={{ overflow: 'hidden', flex: 1 }}>
-                          <strong style={{ display: 'block', fontSize: '0.86rem', color: '#1b4332', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {prod.title}
-                          </strong>
-                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '2px' }}>
-                            <span style={{ fontSize: '0.78rem', color: '#2d6a4f', fontWeight: 800 }}>{prod.price}/pc</span>
-                            <span style={{ fontSize: '0.72rem', color: '#52b788', background: '#e8f7ee', padding: '2px 6px', borderRadius: '4px' }}>In Stock</span>
-                          </div>
-                        </div>
-                        <span style={{ color: '#2d6a4f', fontSize: '0.84rem', fontWeight: 800 }}>→</span>
-                      </a>
-                    ))}
-                  </div>
-
-                  {/* Sugarcane Certification Pill */}
-                  <div style={{ background: '#ffffff', borderRadius: '12px', padding: '12px', border: '1px dashed #52b788', textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-                      🌾 100% Sugarcane Bagasse Agro-Fiber
+                {/* Steppers List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+                  
+                  {/* Stepper 1: Plates */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                    <div>
+                      <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍽️ Sugarcane Dinner & Compartment Plates</div>
+                      <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>10" 3-CP / 12" Round • ₹2.85/pc</div>
                     </div>
-                    <p style={{ fontSize: '0.74rem', color: '#486153', margin: '4px 0 0' }}>
-                      Microwave Safe (120°C) • Freezer Safe (-20°C) • 90-Day Soil Compostable
-                    </p>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('plates', -250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #b7e4c7', background: '#fff', color: '#1b4332', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ minWidth: '70px', textAlign: 'center', fontWeight: 800, color: '#1b4332', fontSize: '0.95rem' }}>
+                        {customBundle.plates} pcs
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('plates', 250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #2d6a4f', background: '#2d6a4f', color: '#fff', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Stepper 2: Bowls */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                    <div>
+                      <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🥣 Hot Gravy & Soup Bowls (with Lids)</div>
+                      <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>180ml 6oz / 250ml 8oz • ₹1.85/pc</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('bowls', -250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #b7e4c7', background: '#fff', color: '#1b4332', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ minWidth: '70px', textAlign: 'center', fontWeight: 800, color: '#1b4332', fontSize: '0.95rem' }}>
+                        {customBundle.bowls} pcs
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('bowls', 250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #2d6a4f', background: '#2d6a4f', color: '#fff', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Stepper 3: Bento Trays */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                    <div>
+                      <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍱 5 & 6-Compartment Heavy Thali Bento Trays</div>
+                      <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>Zero Sagging with Curries • ₹5.20/pc</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('trays', -250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #b7e4c7', background: '#fff', color: '#1b4332', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ minWidth: '70px', textAlign: 'center', fontWeight: 800, color: '#1b4332', fontSize: '0.95rem' }}>
+                        {customBundle.trays} pcs
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('trays', 250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #2d6a4f', background: '#2d6a4f', color: '#fff', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Stepper 4: Clamshells */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                    <div>
+                      <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>📦 Hinged Clamshell Burger & Delivery Boxes</div>
+                      <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>6x6" / 9x6" Dual-Lock Snap • ₹4.90/pc</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('clamshells', -250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #b7e4c7', background: '#fff', color: '#1b4332', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ minWidth: '70px', textAlign: 'center', fontWeight: 800, color: '#1b4332', fontSize: '0.95rem' }}>
+                        {customBundle.clamshells} pcs
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('clamshells', 250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #2d6a4f', background: '#2d6a4f', color: '#fff', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Stepper 5: Cutlery */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                    <div>
+                      <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍴 Birchwood Compostable Cutlery Sets</div>
+                      <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>160mm Heavy-Duty Spoon & Fork • ₹0.95/pc</div>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('cutlery', -250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #b7e4c7', background: '#fff', color: '#1b4332', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        -
+                      </button>
+                      <span style={{ minWidth: '70px', textAlign: 'center', fontWeight: 800, color: '#1b4332', fontSize: '0.95rem' }}>
+                        {customBundle.cutlery} pcs
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => updateCustomBundle('cutlery', 250)}
+                        style={{ width: '32px', height: '32px', borderRadius: '8px', border: '1.5px solid #2d6a4f', background: '#2d6a4f', color: '#fff', fontWeight: 800, cursor: 'pointer' }}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* Bottom Action Row */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', paddingTop: '18px', borderTop: '1px solid #ddecde' }}>
+                  <div>
+                    <span style={{ fontSize: '0.82rem', color: '#7a9485', textDecoration: 'line-through', display: 'block' }}>
+                      Catalog MRP: ₹{customRawPrice.toLocaleString()}
+                    </span>
+                    <div style={{ fontSize: '1.95rem', fontWeight: 900, color: '#2d6a4f', lineHeight: '1' }}>
+                      ₹{customEstPrice.toLocaleString()}
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 700 }}>
+                      *Includes 15% Custom Bundle Discount. Direct Factory Freight.
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                    <button 
+                      type="button" 
+                      onClick={addCustomBundleToSamples}
+                      className="btn btn-light-green-outline"
+                      style={{ padding: '12px 18px', fontSize: '0.86rem', fontWeight: 800 }}
+                      title="Add free evaluation samples of chosen products"
+                    >
+                      📦 Add Mix to Sample Box
+                    </button>
+                    <button 
+                      type="button"
+                      onClick={orderCustomBundleRFQ}
+                      className="btn btn-primary-green" 
+                      style={{ padding: '12px 22px', fontSize: '0.88rem', fontWeight: 800 }}
+                    >
+                      ⚡ Order Custom Bundle RFQ
+                    </button>
                   </div>
                 </div>
 
               </div>
-            );
-          })()}
 
-          {/* Quick Click Thumbnail Cards to Switch Bundles Directly */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginTop: '24px' }}>
+              {/* Right Side: Live Consolidation Summary */}
+              <div style={{ background: '#f0fbf4', borderRadius: '20px', padding: '24px', border: '1.5px solid #b7e4c7' }}>
+                <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#1b4332', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '14px' }}>
+                  Consolidated Shipment Metrics:
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '20px' }}>
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #ddecde' }}>
+                    <span style={{ fontSize: '0.74rem', color: '#666', display: 'block' }}>Total Tableware</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#1b4332' }}>{customTotalItems.toLocaleString()}</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#52b788', display: 'block' }}>Pieces Selected</span>
+                  </div>
+
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #ddecde' }}>
+                    <span style={{ fontSize: '0.74rem', color: '#666', display: 'block' }}>Corrugated Cases</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#1b4332' }}>{customTotalCartons}</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#52b788', display: 'block' }}>Master Cartons</span>
+                  </div>
+
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #ddecde' }}>
+                    <span style={{ fontSize: '0.74rem', color: '#666', display: 'block' }}>Pallet Footprint</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#1b4332' }}>{Math.max(1, Math.ceil(customTotalCartons / 24))}</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#52b788', display: 'block' }}>LTL Standard Pallet</span>
+                  </div>
+
+                  <div style={{ background: '#ffffff', padding: '14px', borderRadius: '12px', border: '1px solid #ddecde' }}>
+                    <span style={{ fontSize: '0.74rem', color: '#666', display: 'block' }}>Bundle Savings</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#16a34a' }}>₹{customSavings.toLocaleString()}</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#16a34a', display: 'block' }}>15% Discount</span>
+                  </div>
+                </div>
+
+                {/* Selected Products Quick List */}
+                <div style={{ background: '#ffffff', borderRadius: '14px', padding: '16px', border: '1px solid #ddecde', marginBottom: '18px' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: 800, color: '#1b4332', marginBottom: '10px' }}>
+                    Selected Bundle Mix:
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.82rem', color: '#2d6a4f' }}>
+                    {customBundle.plates > 0 && <div>✓ <strong>{customBundle.plates} pcs</strong> × 10" / 12" Dinner Plates</div>}
+                    {customBundle.bowls > 0 && <div>✓ <strong>{customBundle.bowls} pcs</strong> × Hot Gravy & Soup Bowls</div>}
+                    {customBundle.trays > 0 && <div>✓ <strong>{customBundle.trays} pcs</strong> × 5-CP Bento Meal Trays</div>}
+                    {customBundle.clamshells > 0 && <div>✓ <strong>{customBundle.clamshells} pcs</strong> × Hinged Clamshell Boxes</div>}
+                    {customBundle.cutlery > 0 && <div>✓ <strong>{customBundle.cutlery} pcs</strong> × Birchwood Cutlery Sets</div>}
+                    {customTotalItems === 0 && <div style={{ color: '#ef4444' }}>Please select at least 1 category above.</div>}
+                  </div>
+                </div>
+
+                {/* Sugarcane Certification Pill */}
+                <div style={{ background: '#ffffff', borderRadius: '12px', padding: '12px', border: '1px dashed #52b788', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                    🌾 100% Sugarcane Bagasse Agro-Fiber
+                  </div>
+                  <p style={{ fontSize: '0.74rem', color: '#486153', margin: '4px 0 0' }}>
+                    Microwave Safe (120°C) • Freezer Safe (-20°C) • 90-Day Soil Compostable
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          ) : (
+            /* PRE-CURATED BUNDLE SPOTLIGHT CARD (Pack 1 to 4) */
+            (() => {
+              const b = starterBundles[bundleSlide] || starterBundles[0];
+              return (
+                <div 
+                  style={{ 
+                    background: 'rgba(255, 255, 255, 0.98)', 
+                    border: '2px solid #52b788', 
+                    borderRadius: '26px', 
+                    padding: '36px', 
+                    boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
+                    position: 'relative',
+                    color: '#182a20',
+                    display: 'grid',
+                    gridTemplateColumns: '1.15fr 0.85fr',
+                    gap: '36px',
+                    alignItems: 'center'
+                  }}
+                >
+                  {/* Left Side: Bundle Info & Checklist */}
+                  <div>
+                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#15803d', background: '#dcfce7', padding: '6px 14px', borderRadius: '999px', border: '1px solid #b7e4c7' }}>
+                        {b.tag}
+                      </span>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#2d6a4f', background: '#f0fbf4', padding: '5px 12px', borderRadius: '8px', border: '1px solid #b7e4c7' }}>
+                        {b.savings}
+                      </span>
+                    </div>
+
+                    <h3 style={{ fontSize: '1.75rem', color: '#1b4332', marginBottom: '12px', fontWeight: 800, lineHeight: '1.3' }}>
+                      {b.title}
+                    </h3>
+                    <p style={{ color: '#486153', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '22px' }}>
+                      {b.desc}
+                    </p>
+
+                    <div style={{ background: '#f7fbf8', border: '1px solid #ddecde', borderRadius: '16px', padding: '20px', marginBottom: '24px' }}>
+                      <div style={{ fontSize: '0.84rem', fontWeight: 800, color: '#1b4332', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        Included Commercial Specifications:
+                      </div>
+                      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.9rem', color: '#2d6a4f', fontWeight: 600 }}>
+                        {b.items.map((item, i) => (
+                          <li key={i} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                            <span style={{ color: '#16a34a', fontWeight: 'bold', fontSize: '1.1rem' }}>✓</span> {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', paddingTop: '18px', borderTop: '1px solid #ddecde' }}>
+                      <div>
+                        <span style={{ fontSize: '0.82rem', color: '#7a9485', textDecoration: 'line-through', display: 'block' }}>Regular: {b.regularPrice}</span>
+                        <div style={{ fontSize: '1.85rem', fontWeight: 900, color: '#2d6a4f', lineHeight: '1' }}>{b.price}</div>
+                        <span style={{ fontSize: '0.72rem', color: '#52b788', fontWeight: 700 }}>*Taxes extra. Bulk freight door delivery.</span>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                        {b.products && b.products[0] && (
+                          <button 
+                            type="button" 
+                            onClick={() => addSample(b.products[0])}
+                            className="btn btn-light-green-outline"
+                            style={{ padding: '12px 18px', fontSize: '0.86rem', fontWeight: 800 }}
+                            title="Add items to evaluation sample box"
+                          >
+                            📦 Add to Sample Box
+                          </button>
+                        )}
+                        <a href="#bulkEnquiry" className="btn btn-primary-green" style={{ padding: '12px 22px', fontSize: '0.88rem', fontWeight: 800 }}>
+                          ⚡ Order Bundle RFQ
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side: Visual Product Breakdown & Agricultural Fiber Guarantee */}
+                  <div style={{ background: '#f0fbf4', borderRadius: '20px', padding: '24px', border: '1.5px solid #b7e4c7' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 800, color: '#1b4332', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '14px' }}>
+                      Included Factory Products ({b.products ? b.products.length : 0}):
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
+                      {b.products && b.products.map((prod, pIdx) => prod && (
+                        <a 
+                          key={pIdx} 
+                          href={`/products/${prod.slug}`} 
+                          style={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: '12px', 
+                            background: '#ffffff', 
+                            padding: '12px 14px', 
+                            borderRadius: '14px', 
+                            border: '1px solid #ddecde', 
+                            textDecoration: 'none',
+                            boxShadow: '0 2px 8px rgba(45, 106, 79, 0.04)',
+                            transition: 'transform 0.15s, border-color 0.15s'
+                          }}
+                          title={`View ${prod.title}`}
+                        >
+                          <img 
+                            src={prod.featuredImage} 
+                            alt={prod.title} 
+                            style={{ width: '56px', height: '56px', objectFit: 'contain', background: '#fff', borderRadius: '10px', padding: '4px', border: '1px solid #e2ece5', flexShrink: 0 }} 
+                          />
+                          <div style={{ overflow: 'hidden', flex: 1 }}>
+                            <strong style={{ display: 'block', fontSize: '0.86rem', color: '#1b4332', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              {prod.title}
+                            </strong>
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginTop: '2px' }}>
+                              <span style={{ fontSize: '0.78rem', color: '#2d6a4f', fontWeight: 800 }}>{prod.price}/pc</span>
+                              <span style={{ fontSize: '0.72rem', color: '#52b788', background: '#e8f7ee', padding: '2px 6px', borderRadius: '4px' }}>In Stock</span>
+                            </div>
+                          </div>
+                          <span style={{ color: '#2d6a4f', fontSize: '0.84rem', fontWeight: 800 }}>→</span>
+                        </a>
+                      ))}
+                    </div>
+
+                    {/* Sugarcane Certification Pill */}
+                    <div style={{ background: '#ffffff', borderRadius: '12px', padding: '12px', border: '1px dashed #52b788', textAlign: 'center' }}>
+                      <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#15803d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                        🌾 100% Sugarcane Bagasse Agro-Fiber
+                      </div>
+                      <p style={{ fontSize: '0.74rem', color: '#486153', margin: '4px 0 0' }}>
+                        Microwave Safe (120°C) • Freezer Safe (-20°C) • 90-Day Soil Compostable
+                      </p>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })()
+          )}
+
+          {/* Quick Click Thumbnail Cards to Switch Bundles Directly (4 Curated Packs + 1 Custom Builder) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginTop: '24px' }}>
             {starterBundles.map((b, idx) => {
               const isActive = bundleSlide === idx;
+              const packTitles = ['Cloud Kitchen', 'Corporate Thali', 'Banquet Catering', 'QSR Cafe & Bakery'];
               return (
                 <div 
                   key={b.id}
                   onClick={() => setBundleSlide(idx)}
                   style={{
-                    background: isActive ? 'rgba(82, 183, 136, 0.28)' : 'rgba(255, 255, 255, 0.12)',
+                    background: isActive ? 'rgba(82, 183, 136, 0.32)' : 'rgba(255, 255, 255, 0.12)',
                     border: isActive ? '2px solid #52b788' : '1px solid rgba(255, 255, 255, 0.25)',
                     borderRadius: '18px',
-                    padding: '16px 20px',
+                    padding: '16px 18px',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -816,19 +1329,52 @@ export default function HomePage() {
                 >
                   <div>
                     <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#d8f3dc' }}>{b.tag}</span>
-                    <h4 style={{ fontSize: '0.94rem', color: '#ffffff', margin: '3px 0 0', fontWeight: 700 }}>
-                      Pack {idx + 1}: {idx === 0 ? 'Cloud Kitchen' : idx === 1 ? 'Corporate Thali' : 'Banquet Catering'}
+                    <h4 style={{ fontSize: '0.92rem', color: '#ffffff', margin: '3px 0 0', fontWeight: 700 }}>
+                      Pack {idx + 1}: {packTitles[idx]}
                     </h4>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#52b788' }}>{b.price}</div>
-                    <span style={{ fontSize: '0.72rem', color: isActive ? '#a7f3d0' : 'rgba(255,255,255,0.7)', fontWeight: 600 }}>
-                      {isActive ? '● Active Slide' : 'Click to View →'}
+                    <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#52b788' }}>{b.price}</div>
+                    <span style={{ fontSize: '0.7rem', color: isActive ? '#a7f3d0' : 'rgba(255,255,255,0.7)', fontWeight: 600 }}>
+                      {isActive ? '● Active' : 'Select →'}
                     </span>
                   </div>
                 </div>
               );
             })}
+
+            {/* 5th Thumbnail Card: Custom Builder */}
+            <div 
+              onClick={() => setBundleSlide(4)}
+              style={{
+                background: bundleSlide === 4 ? 'rgba(82, 183, 136, 0.35)' : 'rgba(255, 215, 0, 0.12)',
+                border: bundleSlide === 4 ? '2px solid #52b788' : '1px solid rgba(255, 215, 0, 0.35)',
+                borderRadius: '18px',
+                padding: '16px 18px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backdropFilter: 'blur(10px)',
+                transition: 'all 0.2s',
+                boxShadow: bundleSlide === 4 ? '0 8px 20px rgba(0, 0, 0, 0.25)' : 'none'
+              }}
+            >
+              <div>
+                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#ffd166' }}>🛠️ Custom Mix</span>
+                <h4 style={{ fontSize: '0.92rem', color: '#ffffff', margin: '3px 0 0', fontWeight: 700 }}>
+                  Build Your Own Bundle
+                </h4>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#52b788' }}>
+                  ₹{customEstPrice.toLocaleString()}
+                </div>
+                <span style={{ fontSize: '0.7rem', color: bundleSlide === 4 ? '#a7f3d0' : '#ffd166', fontWeight: 600 }}>
+                  {bundleSlide === 4 ? '● Active Config' : 'Configure →'}
+                </span>
+              </div>
+            </div>
           </div>
 
         </div>
