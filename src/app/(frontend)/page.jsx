@@ -183,22 +183,6 @@ export default function HomePage() {
       products: [pPavBhaji, pRoundPlate],
       price: '₹7,200',
       regularPrice: '₹9,000'
-    },
-    {
-      id: 'b4',
-      title: 'QSR Cafe, Bakery & Street Food Bundle',
-      tag: '☕ Quick-Serve & Cafe Pack',
-      savings: 'Save 16% Cafe Rate',
-      desc: 'Compact aesthetic tableware for artisanal burgers, sandwiches, pastries, noodles, and hot beverages.',
-      items: [
-        '750 pcs × 9x6" Clamshell Sandwich & Burger Boxes',
-        '750 pcs × 6" Square Dessert & Snack Plates',
-        '750 pcs × 8oz (230ml) Hot Gravy & Soup Bowls',
-        '750 pcs × Birchwood Compostable Forks'
-      ],
-      products: [pSquarePlate, pContainer],
-      price: '₹5,400',
-      regularPrice: '₹6,450'
     }
   ];
 
@@ -526,8 +510,8 @@ export default function HomePage() {
                     onClick={() => setBestSellerSlide(prev => Math.max(0, prev - 1))}
                     disabled={bestSellerSlide === 0}
                     style={{
-                      width: '40px',
-                      height: '40px',
+                      width: '42px',
+                      height: '42px',
                       borderRadius: '50%',
                       background: bestSellerSlide === 0 ? '#e2ece5' : '#ffffff',
                       color: bestSellerSlide === 0 ? '#9cb5a5' : '#1b4332',
@@ -542,8 +526,9 @@ export default function HomePage() {
                     title="Previous Slide"
                     aria-label="Previous Slide"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="15 18 9 12 15 6" />
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="19" y1="12" x2="5" y2="12" />
+                      <polyline points="12 19 5 12 12 5" />
                     </svg>
                   </button>
                   <button
@@ -551,8 +536,8 @@ export default function HomePage() {
                     onClick={() => setBestSellerSlide(prev => Math.min(bestSellers.length - 4, prev + 1))}
                     disabled={bestSellerSlide >= bestSellers.length - 4}
                     style={{
-                      width: '40px',
-                      height: '40px',
+                      width: '42px',
+                      height: '42px',
                       borderRadius: '50%',
                       background: bestSellerSlide >= bestSellers.length - 4 ? '#e2ece5' : '#2d6a4f',
                       color: bestSellerSlide >= bestSellers.length - 4 ? '#9cb5a5' : '#ffffff',
@@ -561,14 +546,15 @@ export default function HomePage() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+                      boxShadow: '0 2px 8px rgba(45, 106, 79, 0.2)',
                       transition: 'all 0.2s'
                     }}
                     title="Next Slide"
                     aria-label="Next Slide"
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 18 15 12 9 6" />
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
                     </svg>
                   </button>
                 </div>
@@ -791,11 +777,11 @@ export default function HomePage() {
             borderRadius: '20px',
             padding: '12px 20px'
           }}>
-            {/* Quick Bundle Selector Tabs (4 Curated Packs + 1 Custom Builder) */}
+            {/* Quick Bundle Selector Tabs (3 Curated Packs + 1 Custom Builder) */}
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {starterBundles.map((b, idx) => {
                 const isActive = bundleSlide === idx;
-                const packNames = ['Cloud Kitchen', 'Corporate Cafeteria', 'Banquet Catering', 'QSR Cafe & Bakery'];
+                const packNames = ['Cloud Kitchen', 'Corporate Cafeteria', 'Banquet Catering'];
                 return (
                   <button
                     key={b.id}
@@ -822,19 +808,19 @@ export default function HomePage() {
                 );
               })}
 
-              {/* 5th Tab: Custom Build For Yourself */}
+              {/* 4th Tab: Custom Build For Yourself */}
               <button
                 type="button"
-                onClick={() => setBundleSlide(4)}
+                onClick={() => setBundleSlide(3)}
                 style={{
                   padding: '9px 18px',
                   borderRadius: '999px',
                   fontSize: '0.84rem',
                   fontWeight: 800,
                   cursor: 'pointer',
-                  border: bundleSlide === 4 ? '2px solid #52b788' : '1px solid rgba(255,215,0,0.4)',
-                  background: bundleSlide === 4 ? '#52b788' : 'rgba(255,215,0,0.15)',
-                  color: bundleSlide === 4 ? '#0d2818' : '#ffd166',
+                  border: bundleSlide === 3 ? '2px solid #52b788' : '1px solid rgba(255,215,0,0.4)',
+                  background: bundleSlide === 3 ? '#52b788' : 'rgba(255,215,0,0.15)',
+                  color: bundleSlide === 3 ? '#0d2818' : '#ffd166',
                   transition: 'all 0.2s',
                   display: 'flex',
                   alignItems: 'center',
@@ -849,20 +835,20 @@ export default function HomePage() {
             {/* Slider Arrow Controls & Counter */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span style={{ fontSize: '0.84rem', fontWeight: 700, color: '#d8f3dc' }}>
-                {bundleSlide === 4 ? 'Custom Mix (5 of 5)' : `Pack ${bundleSlide + 1} of 4`}
+                {bundleSlide === 3 ? 'Custom Mix (4 of 4)' : `Pack ${bundleSlide + 1} of 3`}
               </span>
               <button
                 type="button"
-                onClick={() => setBundleSlide(prev => (prev === 0 ? 4 : prev - 1))}
+                onClick={() => setBundleSlide(prev => (prev === 0 ? 3 : prev - 1))}
                 style={{
-                  width: '38px',
-                  height: '38px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
                   background: '#ffffff',
-                  border: 'none',
+                  border: '1.5px solid #52b788',
                   color: '#1b4332',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -871,22 +857,23 @@ export default function HomePage() {
                 title="Previous Bundle"
                 aria-label="Previous Bundle"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
                 </svg>
               </button>
               <button
                 type="button"
-                onClick={() => setBundleSlide(prev => (prev === 4 ? 0 : prev + 1))}
+                onClick={() => setBundleSlide(prev => (prev === 3 ? 0 : prev + 1))}
                 style={{
-                  width: '38px',
-                  height: '38px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
                   background: '#52b788',
                   border: 'none',
                   color: '#0d2818',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -895,15 +882,16 @@ export default function HomePage() {
                 title="Next Bundle"
                 aria-label="Next Bundle"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
                 </svg>
               </button>
             </div>
           </div>
 
           {/* Active Featured Bundle Spotlight Card (Full Width - Zero Cut-off) */}
-          {bundleSlide === 4 ? (
+          {bundleSlide === 3 ? (
             /* INTERACTIVE CUSTOM BUNDLE BUILDER (USER CAN BUILD FOR THEMSELVES) */
             <div 
               style={{ 
@@ -1311,11 +1299,11 @@ export default function HomePage() {
             })()
           )}
 
-          {/* Quick Click Thumbnail Cards to Switch Bundles Directly (4 Curated Packs + 1 Custom Builder) */}
+          {/* Quick Click Thumbnail Cards to Switch Bundles Directly (3 Curated Packs + 1 Custom Builder) */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginTop: '24px' }}>
             {starterBundles.map((b, idx) => {
               const isActive = bundleSlide === idx;
-              const packTitles = ['Cloud Kitchen', 'Corporate Thali', 'Banquet Catering', 'QSR Cafe & Bakery'];
+              const packTitles = ['Cloud Kitchen', 'Corporate Thali', 'Banquet Catering'];
               return (
                 <div 
                   key={b.id}
@@ -1350,12 +1338,12 @@ export default function HomePage() {
               );
             })}
 
-            {/* 5th Thumbnail Card: Custom Builder */}
+            {/* 4th Thumbnail Card: Custom Builder */}
             <div 
-              onClick={() => setBundleSlide(4)}
+              onClick={() => setBundleSlide(3)}
               style={{
-                background: bundleSlide === 4 ? 'rgba(82, 183, 136, 0.35)' : 'rgba(255, 215, 0, 0.12)',
-                border: bundleSlide === 4 ? '2px solid #52b788' : '1px solid rgba(255, 215, 0, 0.35)',
+                background: bundleSlide === 3 ? 'rgba(82, 183, 136, 0.35)' : 'rgba(255, 215, 0, 0.12)',
+                border: bundleSlide === 3 ? '2px solid #52b788' : '1px solid rgba(255, 215, 0, 0.35)',
                 borderRadius: '18px',
                 padding: '16px 18px',
                 cursor: 'pointer',
@@ -1364,7 +1352,7 @@ export default function HomePage() {
                 justifyContent: 'space-between',
                 backdropFilter: 'blur(10px)',
                 transition: 'all 0.2s',
-                boxShadow: bundleSlide === 4 ? '0 8px 20px rgba(0, 0, 0, 0.25)' : 'none'
+                boxShadow: bundleSlide === 3 ? '0 8px 20px rgba(0, 0, 0, 0.25)' : 'none'
               }}
             >
               <div>
@@ -1377,8 +1365,8 @@ export default function HomePage() {
                 <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#52b788' }}>
                   ₹{customEstPrice.toLocaleString()}
                 </div>
-                <span style={{ fontSize: '0.7rem', color: bundleSlide === 4 ? '#a7f3d0' : '#ffd166', fontWeight: 600 }}>
-                  {bundleSlide === 4 ? '● Active Config' : 'Configure →'}
+                <span style={{ fontSize: '0.7rem', color: bundleSlide === 3 ? '#a7f3d0' : '#ffd166', fontWeight: 600 }}>
+                  {bundleSlide === 3 ? '● Active Config' : 'Configure →'}
                 </span>
               </div>
             </div>
@@ -1464,14 +1452,14 @@ export default function HomePage() {
                 type="button"
                 onClick={() => setIndustrySlide(prev => (prev === 0 ? industries.length - 1 : prev - 1))}
                 style={{
-                  width: '38px',
-                  height: '38px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
                   background: '#ffffff',
                   border: '1.5px solid #b7e4c7',
                   color: '#1b4332',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 8px rgba(45, 106, 79, 0.12)',
+                  boxShadow: '0 2px 10px rgba(45, 106, 79, 0.15)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1480,22 +1468,23 @@ export default function HomePage() {
                 title="Previous Industry"
                 aria-label="Previous Industry"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12" />
+                  <polyline points="12 19 5 12 12 5" />
                 </svg>
               </button>
               <button
                 type="button"
                 onClick={() => setIndustrySlide(prev => (prev === industries.length - 1 ? 0 : prev + 1))}
                 style={{
-                  width: '38px',
-                  height: '38px',
+                  width: '42px',
+                  height: '42px',
                   borderRadius: '50%',
                   background: '#2d6a4f',
                   border: 'none',
                   color: '#ffffff',
                   cursor: 'pointer',
-                  boxShadow: '0 2px 8px rgba(45, 106, 79, 0.2)',
+                  boxShadow: '0 2px 10px rgba(45, 106, 79, 0.25)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -1504,8 +1493,9 @@ export default function HomePage() {
                 title="Next Industry"
                 aria-label="Next Industry"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
                 </svg>
               </button>
             </div>
