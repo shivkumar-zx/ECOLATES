@@ -99,7 +99,7 @@ export default function FloatingDocks({
 
       {/* RIGHT-SIDE FLOATING ACTION DOCK (ICON ONLY -> EXPANDS ON HOVER) */}
       <aside className="floating-dock floating-dock-right" aria-label="Right Quick Actions">
-        <a href="/#bulkEnquiry" className="float-dock-btn float-rfq-highlight" title="⚡ Instant Wholesale RFQ">
+        <a href="/#bulkEnquiry" className="float-dock-btn float-rfq-highlight desktop-only-float" title="⚡ Instant Wholesale RFQ">
           <span className="dock-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
@@ -116,14 +116,14 @@ export default function FloatingDocks({
           title="Instant WhatsApp Quote"
         >
           <span className="dock-icon">
-            <svg width="20" height="20" fill="#25d366" viewBox="0 0 24 24">
+            <svg width="22" height="22" fill="#25d366" viewBox="0 0 24 24">
               <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
             </svg>
           </span>
           <span className="dock-text">Chat on WhatsApp</span>
         </a>
 
-        <a href="tel:+919876543210" className="float-dock-btn" title="Call Factory Helpline">
+        <a href="tel:+919876543210" className="float-dock-btn desktop-only-float" title="Call Factory Helpline">
           <span className="dock-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2d6a4f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>

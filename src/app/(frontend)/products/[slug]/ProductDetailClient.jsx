@@ -138,7 +138,7 @@ export default function ProductDetailClient({ product, related }) {
             )}
 
             {/* 4 Icon Feature Badges with clean vector styling */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginTop: '22px' }}>
+            <div className="grid-2-responsive" style={{ gap: '12px', marginTop: '22px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#f0fbf4', padding: '12px 14px', borderRadius: '14px', border: '1px solid #b7e4c7' }}>
                 <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem', border: '1px solid #ddecde', flexShrink: 0 }}>
                   🍃
@@ -204,7 +204,7 @@ export default function ProductDetailClient({ product, related }) {
             </p>
 
             {/* Quick Spec Highlights Strip */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '24px' }}>
+            <div className="product-specs-highlights">
               <div style={{ background: '#f7faf8', border: '1px solid #ddecde', borderRadius: '12px', padding: '10px 12px', textAlign: 'center' }}>
                 <span style={{ fontSize: '0.72rem', color: '#7a9485', display: 'block', textTransform: 'uppercase', fontWeight: 700 }}>Case Pack</span>
                 <strong style={{ fontSize: '0.95rem', color: '#1b4332' }}>{product.parsedSpecs?.qtyPerCase || pcsPerCarton} pcs</strong>
@@ -581,10 +581,10 @@ export default function ProductDetailClient({ product, related }) {
         {/* ========================================================
             WOOCOMMERCE STYLE SPECIFICATIONS & DETAILS TABS
             ======================================================== */}
-        <div style={{ background: '#ffffff', border: '1.5px solid #ddecde', borderRadius: '24px', padding: '36px', marginBottom: '64px', boxShadow: '0 8px 30px rgba(45, 106, 79, 0.05)' }}>
+        <div className="spotlight-card-responsive" style={{ background: '#ffffff', border: '1.5px solid #ddecde', marginBottom: '64px', boxShadow: '0 8px 30px rgba(45, 106, 79, 0.05)' }}>
           
           {/* Tab Navigation */}
-          <div style={{ display: 'flex', gap: '10px', borderBottom: '2px solid #ddecde', paddingBottom: '16px', marginBottom: '28px', flexWrap: 'wrap' }}>
+          <div className="product-tabs-header">
             <button
               type="button"
               onClick={() => setActiveTab('visuals')}
@@ -673,7 +673,7 @@ export default function ProductDetailClient({ product, related }) {
 
               {/* Rich Visual Feature Cards Grid */}
               {product.visualFeatures && product.visualFeatures.length > 0 ? (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+                <div className="grid-2-responsive">
                   {product.visualFeatures.map((feat, idx) => (
                     <div 
                       key={idx} 
@@ -708,7 +708,7 @@ export default function ProductDetailClient({ product, related }) {
                   ))}
                 </div>
               ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+                <div className="grid-3-responsive">
                   <div style={{ background: '#f7fbf8', border: '1px solid #ddecde', borderRadius: '16px', padding: '24px' }}>
                     <div style={{ fontSize: '2rem', marginBottom: '10px' }}>✨</div>
                     <h4 style={{ color: '#1b4332', fontSize: '1.15rem', marginBottom: '8px' }}>Elegantly Bright White</h4>
@@ -741,7 +741,7 @@ export default function ProductDetailClient({ product, related }) {
                   Ecolates Certified Degradation & Thermal Testing Standards
                 </h4>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+                <div className="grid-4-responsive">
                   <div style={{ background: '#ffffff', borderRadius: '14px', padding: '18px', border: '1px solid #b7e4c7', textAlign: 'center' }}>
                     <div style={{ fontSize: '2.2rem', marginBottom: '6px' }}>🌱</div>
                     <h5 style={{ fontSize: '0.95rem', color: '#1b4332', marginBottom: '6px' }}>Compostable</h5>
@@ -792,7 +792,7 @@ export default function ProductDetailClient({ product, related }) {
               </div>
 
               {/* Structured Specifications Table */}
-              <div style={{ border: '1.5px solid #ddecde', borderRadius: '16px', overflow: 'hidden', marginBottom: '28px' }}>
+              <div className="table-responsive" style={{ border: '1.5px solid #ddecde', borderRadius: '16px', overflowX: 'auto', marginBottom: '28px' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.92rem' }}>
                   <thead>
                     <tr style={{ background: '#f0fbf4', borderBottom: '2px solid #b7e4c7' }}>
@@ -981,7 +981,7 @@ export default function ProductDetailClient({ product, related }) {
                 </p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+              <div className="grid-3-responsive">
                 <div style={{ background: '#f7faf8', border: '1px solid #ddecde', borderRadius: '14px', padding: '22px' }}>
                   <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '8px' }}>🎨</span>
                   <strong style={{ color: '#1b4332', display: 'block', fontSize: '1.05rem', marginBottom: '6px' }}>CNC Die Tooling</strong>

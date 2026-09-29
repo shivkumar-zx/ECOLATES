@@ -894,12 +894,10 @@ export default function HomePage() {
           {bundleSlide === 3 ? (
             /* INTERACTIVE CUSTOM BUNDLE BUILDER (USER CAN BUILD FOR THEMSELVES) */
             <div 
-              className="sample-box-grid-responsive"
+              className="sample-box-grid-responsive spotlight-card-responsive"
               style={{ 
                 background: 'rgba(255, 255, 255, 0.98)', 
                 border: '2.5px solid #52b788', 
-                borderRadius: '26px', 
-                padding: '36px', 
                 boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                 position: 'relative',
                 color: '#182a20'
@@ -927,12 +925,12 @@ export default function HomePage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
                   
                   {/* Stepper 1: Plates */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                  <div className="custom-bundle-stepper-row">
                     <div>
                       <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍽️ Sugarcane Dinner & Compartment Plates</div>
                       <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>10" 3-CP / 12" Round • ₹2.85/pc</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="custom-bundle-stepper-controls">
                       <button
                         type="button"
                         onClick={() => updateCustomBundle('plates', -250)}
@@ -954,12 +952,12 @@ export default function HomePage() {
                   </div>
 
                   {/* Stepper 2: Bowls */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                  <div className="custom-bundle-stepper-row">
                     <div>
                       <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🥣 Hot Gravy & Soup Bowls (with Lids)</div>
                       <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>180ml 6oz / 250ml 8oz • ₹1.85/pc</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="custom-bundle-stepper-controls">
                       <button
                         type="button"
                         onClick={() => updateCustomBundle('bowls', -250)}
@@ -981,12 +979,12 @@ export default function HomePage() {
                   </div>
 
                   {/* Stepper 3: Bento Trays */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                  <div className="custom-bundle-stepper-row">
                     <div>
                       <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍱 5 & 6-Compartment Heavy Thali Bento Trays</div>
                       <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>Zero Sagging with Curries • ₹5.20/pc</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="custom-bundle-stepper-controls">
                       <button
                         type="button"
                         onClick={() => updateCustomBundle('trays', -250)}
@@ -1008,12 +1006,12 @@ export default function HomePage() {
                   </div>
 
                   {/* Stepper 4: Clamshells */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                  <div className="custom-bundle-stepper-row">
                     <div>
                       <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>📦 Hinged Clamshell Burger & Delivery Boxes</div>
                       <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>6x6" / 9x6" Dual-Lock Snap • ₹4.90/pc</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="custom-bundle-stepper-controls">
                       <button
                         type="button"
                         onClick={() => updateCustomBundle('clamshells', -250)}
@@ -1035,12 +1033,12 @@ export default function HomePage() {
                   </div>
 
                   {/* Stepper 5: Cutlery */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f7fbf8', padding: '12px 18px', borderRadius: '14px', border: '1px solid #ddecde' }}>
+                  <div className="custom-bundle-stepper-row">
                     <div>
                       <div style={{ fontWeight: 800, color: '#1b4332', fontSize: '0.92rem' }}>🍴 Birchwood Compostable Cutlery Sets</div>
                       <div style={{ fontSize: '0.78rem', color: '#52b788', fontWeight: 600 }}>160mm Heavy-Duty Spoon & Fork • ₹0.95/pc</div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div className="custom-bundle-stepper-controls">
                       <button
                         type="button"
                         onClick={() => updateCustomBundle('cutlery', -250)}
@@ -1165,12 +1163,10 @@ export default function HomePage() {
               const b = starterBundles[bundleSlide] || starterBundles[0];
               return (
                 <div 
-                  className="bundle-showcase-grid-responsive"
+                  className="bundle-showcase-grid-responsive spotlight-card-responsive"
                   style={{ 
                     background: 'rgba(255, 255, 255, 0.98)', 
                     border: '2px solid #52b788', 
-                    borderRadius: '26px', 
-                    padding: '36px', 
                     boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4)',
                     position: 'relative',
                     color: '#182a20'
@@ -1293,7 +1289,7 @@ export default function HomePage() {
           )}
 
           {/* Quick Click Thumbnail Cards to Switch Bundles Directly (3 Curated Packs + 1 Custom Builder) */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px', marginTop: '24px' }}>
+          <div className="bundle-thumbnails-grid">
             {starterBundles.map((b, idx) => {
               const isActive = bundleSlide === idx;
               const packTitles = ['Cloud Kitchen', 'Corporate Thali', 'Banquet Catering'];
@@ -1378,7 +1374,8 @@ export default function HomePage() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           padding: '76px 0 84px',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          maxWidth: '100vw'
         }}
       >
         <div className="container">
@@ -1499,12 +1496,10 @@ export default function HomePage() {
             const ind = industries[industrySlide];
             return (
               <div
-                className="industry-grid-responsive"
+                className="industry-grid-responsive spotlight-card-responsive"
                 style={{
                   background: '#ffffff',
                   border: '2px solid #52b788',
-                  borderRadius: '24px',
-                  padding: '34px',
                   boxShadow: '0 14px 34px rgba(45, 106, 79, 0.10)',
                   marginBottom: '26px'
                 }}
@@ -1622,7 +1617,7 @@ export default function HomePage() {
                     cursor: 'pointer',
                     textAlign: 'center',
                     transition: 'all 0.2s',
-                    minWidth: '150px'
+                    boxSizing: 'border-box'
                   }}
                 >
                   <div style={{ fontSize: '1.8rem', marginBottom: '6px' }}>{ind.icon}</div>
