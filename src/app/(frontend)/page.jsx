@@ -476,7 +476,7 @@ export default function HomePage() {
                         className="btn btn-primary-green"
                         style={{ padding: '6px 12px', fontSize: '0.78rem' }}
                       >
-                        Specs →
+                        Specs
                       </a>
                     </div>
                   </div>
@@ -560,7 +560,7 @@ export default function HomePage() {
                 </div>
               )}
               <a href="/products" className="btn btn-light-green-outline" style={{ fontWeight: 700 }}>
-                View Full Catalog →
+                View Full Catalog
               </a>
             </div>
           </div>
@@ -628,7 +628,7 @@ export default function HomePage() {
                             className="btn btn-primary-green" 
                             style={{ padding: '6px 12px', fontSize: '0.78rem' }}
                           >
-                            Details →
+                            Details
                           </a>
                         </div>
                       </div>
@@ -705,7 +705,7 @@ export default function HomePage() {
                           className="btn btn-primary-green" 
                           style={{ padding: '6px 12px', fontSize: '0.78rem' }}
                         >
-                          Details →
+                          Details
                         </a>
                       </div>
                     </div>
@@ -1278,7 +1278,6 @@ export default function HomePage() {
                               <span style={{ fontSize: '0.72rem', color: '#52b788', background: '#e8f7ee', padding: '2px 6px', borderRadius: '4px' }}>In Stock</span>
                             </div>
                           </div>
-                          <span style={{ color: '#2d6a4f', fontSize: '0.84rem', fontWeight: 800 }}>→</span>
                         </a>
                       ))}
                     </div>
@@ -1331,7 +1330,7 @@ export default function HomePage() {
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#52b788' }}>{b.price}</div>
                     <span style={{ fontSize: '0.7rem', color: isActive ? '#a7f3d0' : 'rgba(255,255,255,0.7)', fontWeight: 600 }}>
-                      {isActive ? '● Active' : 'Select →'}
+                      {isActive ? '● Active' : 'Select'}
                     </span>
                   </div>
                 </div>
@@ -1366,7 +1365,7 @@ export default function HomePage() {
                   ₹{customEstPrice.toLocaleString()}
                 </div>
                 <span style={{ fontSize: '0.7rem', color: bundleSlide === 3 ? '#a7f3d0' : '#ffd166', fontWeight: 600 }}>
-                  {bundleSlide === 3 ? '● Active Config' : 'Configure →'}
+                  {bundleSlide === 3 ? '● Active Config' : 'Configure'}
                 </span>
               </div>
             </div>
@@ -1646,7 +1645,7 @@ export default function HomePage() {
                     {ind.title.split('&')[0].trim()}
                   </h5>
                   <span style={{ fontSize: '0.7rem', color: isActive ? '#15803d' : '#7a9485', fontWeight: 700 }}>
-                    {isActive ? '● Selected' : 'View →'}
+                    {isActive ? '● Selected' : 'View'}
                   </span>
                 </div>
               );
@@ -2135,7 +2134,7 @@ export default function HomePage() {
                   className="btn btn-light-green-outline"
                   style={{ padding: '10px 16px' }}
                 >
-                  Full Specs →
+                  Full Specs
                 </a>
               </div>
             </div>
@@ -2304,7 +2303,7 @@ export default function HomePage() {
                 </div>
 
                 <button type="submit" className="btn btn-primary-green btn-block btn-lg">
-                  Submit Wholesale RFQ for Factory Rates →
+                  Submit Wholesale RFQ for Factory Rates
                 </button>
               </form>
             )}

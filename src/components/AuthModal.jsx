@@ -240,7 +240,7 @@ export default function AuthModal({ isOpen, onClose, onSignIn }) {
             className="btn btn-primary-green btn-lg btn-block"
             style={{ marginTop: '8px' }}
           >
-            {activeTab === 'login' ? 'Sign In to Trade Account →' : 'Complete Trade Registration →'}
+            {activeTab === 'login' ? 'Sign In to Trade Account' : 'Complete Trade Registration'}
           </button>
         </form>
 

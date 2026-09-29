@@ -430,7 +430,7 @@ export default function SampleModal({ isOpen, onClose, selectedItems = [], onCle
                 >
                   {isSubmitting 
                     ? 'Logging Courier Package...' 
-                    : `Dispatch My ${selectedProductIds.length} Free Sample Units →`
+                    : `Dispatch My ${selectedProductIds.length} Free Sample Units`
                   }
                 </button>
 

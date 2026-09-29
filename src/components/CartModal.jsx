@@ -182,7 +182,7 @@ export default function CartModal({
                 className="btn btn-primary-green"
                 style={{ padding: '10px 22px', fontSize: '0.88rem', fontWeight: 700 }}
               >
-                Browse Commercial Products →
+                Browse Commercial Products
               </a>
             </div>
           ) : submitted ? (
@@ -403,7 +403,7 @@ export default function CartModal({
                       className="btn btn-primary-green"
                       style={{ flex: 1, justifyContent: 'center', padding: '11px 18px', fontSize: '0.86rem', fontWeight: 800 }}
                     >
-                      {isSubmitting ? 'Dispatching...' : `⚡ Send Cart RFQ (₹${totalAmount.toLocaleString('en-IN')}) →`}
+                      {isSubmitting ? 'Dispatching...' : `Send Cart RFQ (₹${totalAmount.toLocaleString('en-IN')})`}
                     </button>
 
                     <button 

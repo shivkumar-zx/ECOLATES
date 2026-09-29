@@ -219,7 +219,6 @@ export default function Header({
                               <span style={{ fontSize: '0.7rem', color: '#7a9485' }}>• {p.category}</span>
                             </div>
                           </div>
-                          <span style={{ color: '#2d6a4f', fontSize: '0.82rem', fontWeight: 800 }}>→</span>
                         </div>
                       ))
                     ) : (
@@ -246,7 +245,7 @@ export default function Header({
                       cursor: 'pointer'
                     }}
                   >
-                    View All Results for "{searchQuery}" in Full Catalog →
+                    View All Results for "{searchQuery}" in Full Catalog
                   </div>
                 </div>
               )}

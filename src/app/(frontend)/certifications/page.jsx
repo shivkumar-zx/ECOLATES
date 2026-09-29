@@ -119,7 +119,7 @@ export default function CertificationsPage() {
                     className="btn btn-primary-green"
                     style={{ flexGrow: 1, justifyContent: 'center' }}
                   >
-                    📄 Download Official PDF Report →
+                    Download Official PDF Report
                   </a>
                 </div>
               </div>
@@ -136,7 +136,7 @@ export default function CertificationsPage() {
             We provide full documentation packs including Phytosanitary Certificates, Certificates of Origin, Bill of Lading, and Material Safety Data Sheets (MSDS) for ocean freight containers.
           </p>
           <a href="/#bulkEnquiry" className="btn btn-primary-green btn-lg">
-            Request Export Documentation & FCL Quote →
+            Request Export Documentation & FCL Quote
           </a>
         </div>
 

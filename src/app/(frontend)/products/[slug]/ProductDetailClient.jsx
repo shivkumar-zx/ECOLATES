@@ -533,7 +533,7 @@ export default function ProductDetailClient({ product, related }) {
                           className="btn btn-primary-green"
                           style={{ width: '100%', justifyContent: 'center', padding: '12px 18px', fontSize: '0.92rem', fontWeight: 800, marginTop: '4px' }}
                         >
-                          Send Proforma RFQ for {selectedVolume.toLocaleString()} pcs →
+                          Send Proforma RFQ for {selectedVolume.toLocaleString()} pcs
                         </button>
                       </form>
                     )}
@@ -907,7 +907,7 @@ export default function ProductDetailClient({ product, related }) {
                     Certified clean-room environment adhering strictly to international HACCP food-contact manufacturing standards.
                   </p>
                   <a href="/certifications" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.86rem' }}>
-                    View Official Certificate Scan →
+                    View Official Certificate Scan
                   </a>
                 </div>
 
@@ -925,7 +925,7 @@ export default function ProductDetailClient({ product, related }) {
                     Tested via combustion ion chromatography ensuring 0% toxic fluorochemicals or forever chemicals leach into food.
                   </p>
                   <a href="/certifications" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.86rem' }}>
-                    Download PFAS Lab Test PDF →
+                    Download PFAS Lab Test PDF
                   </a>
                 </div>
 
@@ -943,7 +943,7 @@ export default function ProductDetailClient({ product, related }) {
                     Maintains structural integrity for &gt; 4 hours under boiling liquid soup and Indian curry gravies without seep-through.
                   </p>
                   <a href="/certifications" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.86rem' }}>
-                    Download Leak Test Report PDF →
+                    Download Leak Test Report PDF
                   </a>
                 </div>
 
@@ -961,7 +961,7 @@ export default function ProductDetailClient({ product, related }) {
                     Disintegrates into organic biomass within 90 days leaving zero microplastics or heavy metal trace in soil.
                   </p>
                   <a href="/certifications" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.86rem' }}>
-                    View Compost Verification →
+                    View Compost Verification
                   </a>
                 </div>
               </div>
@@ -1020,7 +1020,7 @@ export default function ProductDetailClient({ product, related }) {
                 <h3 style={{ fontSize: '1.7rem', color: '#1b4332', margin: '6px 0 0' }}>Recommended Commercial Pairings</h3>
               </div>
               <a href="/products" style={{ color: '#2d6a4f', fontWeight: 700, fontSize: '0.9rem' }}>
-                View Full Catalog →
+                View Full Catalog
               </a>
             </div>
 
@@ -1054,7 +1054,7 @@ export default function ProductDetailClient({ product, related }) {
                           className="btn btn-primary-green" 
                           style={{ padding: '6px 12px', fontSize: '0.76rem' }}
                         >
-                          View →
+                          View
                         </a>
                       </div>
                     </div>

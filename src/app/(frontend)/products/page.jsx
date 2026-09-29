@@ -174,7 +174,7 @@ function ProductsCatalogContent() {
                         className="btn btn-primary-green"
                         style={{ padding: '6px 12px', fontSize: '0.78rem' }}
                       >
-                        Details →
+                        Details
                       </a>
                     </div>
                   </div>
