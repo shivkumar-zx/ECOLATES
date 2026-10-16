@@ -1,10 +1,23 @@
 import React from 'react';
+import { getPageSeo } from '@/lib/payloadData';
 
-export const metadata = {
-  title: 'About Us | India’s Premier Sugarcane Bagasse Tableware Manufacturer | Ecolates',
-  description: 'Learn about Ecolates, our leadership team, our high-capacity eco tableware manufacturing facilities, and our mission to replace single-use plastics with pure sugarcane agro-waste tableware.',
-  keywords: 'about ecolates, sugarcane tableware factory, bagasse manufacturers india, eco friendly disposable plates'
-};
+export async function generateMetadata() {
+  const seo = await getPageSeo('about');
+  return {
+    title: seo.title || 'About Us | India’s Premier Sugarcane Bagasse Tableware Manufacturer | Ecolates',
+    description:
+      seo.description ||
+      'Learn about Ecolates, our leadership team, our high-capacity eco tableware manufacturing facilities, and our mission to replace single-use plastics with pure sugarcane agro-waste tableware.',
+    keywords:
+      seo.keywords ||
+      'about ecolates, sugarcane tableware factory, bagasse manufacturers india, eco friendly disposable plates',
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      images: [{ url: seo.ogImage || 'https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg' }],
+    },
+  };
+}
 
 export default function AboutPage() {
   const leadership = [

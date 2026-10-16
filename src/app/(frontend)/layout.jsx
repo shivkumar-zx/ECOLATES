@@ -1,20 +1,30 @@
 import '@/app/globals.css';
 import ClientLayoutShell from '@/components/ClientLayoutShell';
-import siteConfig from '@/data/site-config.json';
+import { getPageSeo } from '@/lib/payloadData';
 
-export const metadata = {
-  title: siteConfig.seo.home.title,
-  description: siteConfig.seo.home.description,
-  keywords: siteConfig.seo.home.keywords,
-  openGraph: {
-    title: siteConfig.seo.home.title,
-    description: siteConfig.seo.home.description,
-    images: [{ url: siteConfig.seo.home.ogImage }],
-  },
-  icons: {
-    icon: 'https://www.ecolates.com/wp-content/uploads/2022/12/cropped-ecolates-favicon-32x32.png',
-  }
-};
+export async function generateMetadata() {
+  const seo = await getPageSeo('home');
+  return {
+    title: {
+      template: '%s',
+      default: seo.title || 'Ecolates | Sustainable Sugarcane Bagasse Tableware & Food Packaging',
+    },
+    description:
+      seo.description ||
+      'Leading manufacturer of 100% biodegradable and compostable sugarcane bagasse plates, bowls, food containers, and meal trays in India. Direct factory wholesale B2B supply.',
+    keywords:
+      seo.keywords ||
+      'bagasse plates, sugarcane tableware manufacturer, biodegradable food containers, compostable bowls, wholesale tableware India',
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      images: [{ url: seo.ogImage || 'https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg' }],
+    },
+    icons: {
+      icon: 'https://www.ecolates.com/wp-content/uploads/2022/12/cropped-ecolates-favicon-32x32.png',
+    },
+  };
+}
 
 export const viewport = {
   width: 'device-width',

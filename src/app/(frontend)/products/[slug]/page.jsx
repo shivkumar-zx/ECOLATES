@@ -1,11 +1,11 @@
 import React from 'react';
-import productsData from '@/data/products.json';
 import ProductDetailClient from './ProductDetailClient';
+import { getProductBySlug, getAllProducts } from '@/lib/payloadData';
 
-// Dynamic SEO metadata for each individual product
+// Dynamic SEO metadata for each individual product from Payload DB
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = productsData.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return {
@@ -14,27 +14,32 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const cleanPrice = product.price || '';
+
   return {
-    title: `${product.title} | Direct Factory Supply | Ecolates`,
-    description: `Wholesale ${product.title} manufactured from 100% compostable sugarcane bagasse. Minimum Order Quantity: ${product.moq}. Microwave and freezer safe (-20°C to 120°C).`,
-    keywords: `${product.title}, bagasse ${product.category}, sugarcane packaging, eco tableware manufacturer`,
+    title: `${product.title} | Factory Wholesale Supply | Ecolates`,
+    description:
+      product.shortDescription ||
+      `Wholesale ${product.title} manufactured from 100% compostable sugarcane bagasse. Minimum Order Quantity: ${product.moq || '1000 pcs'}. Microwave and freezer safe (-20°C to 120°C).`,
+    keywords: `${product.title}, bagasse ${product.category || 'tableware'}, sugarcane packaging, compostable tableware wholesale`,
     openGraph: {
       title: `${product.title} | Ecolates`,
-      description: product.shortDescription,
+      description: product.shortDescription || `${product.title} direct factory wholesale rate ${cleanPrice}`,
       images: [{ url: product.featuredImage }],
     },
   };
 }
 
 export async function generateStaticParams() {
-  return productsData.map((p) => ({
+  const products = await getAllProducts();
+  return products.map((p) => ({
     slug: p.slug,
   }));
 }
 
 export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
-  const product = productsData.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return (
@@ -48,14 +53,17 @@ export default async function ProductDetailPage({ params }) {
     );
   }
 
+  const allProducts = await getAllProducts();
   // Related products from same category
-  const related = productsData
+  const related = allProducts
     .filter((p) => p.categorySlug === product.categorySlug && p.slug !== product.slug)
     .slice(0, 4);
 
+  const numericPrice = (product.price || '0').replace(/[^0-9.]/g, '');
+
   return (
     <>
-      {/* Schema.org Structured Data for Google Rich Snippets */}
+      {/* Schema.org Structured Data for Google Rich Snippets & AI LLMs */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -63,9 +71,10 @@ export default async function ProductDetailPage({ params }) {
             '@context': 'https://schema.org',
             '@type': 'Product',
             name: product.title,
-            image: product.images,
-            description: product.description,
-            sku: product.sku,
+            image: product.featuredImage ? [product.featuredImage, ...(product.gallery || [])] : [],
+            description: product.shortDescription || product.rawDescription || product.title,
+            sku: String(product.id || product.slug),
+            material: '100% Sugarcane Bagasse Agro-Waste Pulp',
             brand: {
               '@type': 'Brand',
               name: 'Ecolates',
@@ -73,8 +82,9 @@ export default async function ProductDetailPage({ params }) {
             offers: {
               '@type': 'Offer',
               priceCurrency: 'INR',
-              price: product.price.replace(/[^0-9.]/g, ''),
+              price: numericPrice || '0.00',
               availability: 'https://schema.org/InStock',
+              itemCondition: 'https://schema.org/NewCondition',
               seller: {
                 '@type': 'Organization',
                 name: 'Ecolates Eco Solutions Pvt. Ltd.',

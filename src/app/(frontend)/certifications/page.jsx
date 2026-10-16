@@ -1,10 +1,23 @@
 import React from 'react';
+import { getPageSeo } from '@/lib/payloadData';
 
-export const metadata = {
-  title: 'Lab Certifications & Compliance Reports | Ecolates',
-  description: 'Download verified lab test reports and quality certificates for Ecolates sugarcane tableware including ISO 22000:2018, PFAS-free test results, leak & strength reports, and food contact safety.',
-  keywords: 'ecolates certifications, pfas free tableware, iso 22000 certificate, compostable food container lab reports'
-};
+export async function generateMetadata() {
+  const seo = await getPageSeo('certifications');
+  return {
+    title: seo.title || 'Lab Certifications & Compliance Reports | Ecolates',
+    description:
+      seo.description ||
+      'Download verified lab test reports and quality certificates for Ecolates sugarcane tableware including ISO 22000:2018, PFAS-free test results, leak & strength reports, and food contact safety.',
+    keywords:
+      seo.keywords ||
+      'ecolates certifications, pfas free tableware, iso 22000 certificate, compostable food container lab reports',
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      images: [{ url: seo.ogImage || 'https://www.ecolates.com/wp-content/uploads/2023/04/ecolates_logo.jpg' }],
+    },
+  };
+}
 
 export default function CertificationsPage() {
   const certs = [
